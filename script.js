@@ -601,44 +601,90 @@ const volumeSlider =
 
 
 /* -----------------------------
-   LOAD YOUTUBE API
+   CREATE YOUTUBE PLAYER
 ----------------------------- */
 
-function onYouTubeIframeAPIReady() {
+function createMahalayaPlayer() {
 
-    youtubePlayer = new YT.Player(
-        "youtubePlayer",
-        {
+    if (
+        typeof YT === "undefined" ||
+        !YT.Player
+    ) {
+        console.log(
+            "YouTube API এখনও load হয়নি।"
+        );
 
-            height: "1",
-            width: "1",
+        return;
+    }
 
-            videoId:
-                mahalayaSongs[
-                    mahalayaIndex
-                ].youtubeId,
 
-            playerVars: {
+    const youtubeElement =
+        document.getElementById(
+            "youtubePlayer"
+        );
 
-                autoplay: 0,
-                controls: 0,
-                rel: 0
 
-            },
+    if (!youtubeElement) {
 
-            events: {
+        console.log(
+            "youtubePlayer element পাওয়া যায়নি।"
+        );
 
-                onReady: onYouTubeReady,
+        return;
 
-                onStateChange:
-                    onYouTubeStateChange
+    }
+
+
+    youtubePlayer =
+        new YT.Player(
+            "youtubePlayer",
+            {
+
+                height: "1",
+
+                width: "1",
+
+                videoId:
+                    mahalayaSongs[
+                        mahalayaIndex
+                    ].youtubeId,
+
+                playerVars: {
+
+                    autoplay: 0,
+
+                    controls: 0,
+
+                    rel: 0
+
+                },
+
+                events: {
+
+                    onReady:
+                        onYouTubeReady,
+
+                    onStateChange:
+                        onYouTubeStateChange
+
+                }
 
             }
-
-        }
-    );
+        );
 
 }
+
+
+/* -----------------------------
+   YOUTUBE API CALLBACK
+----------------------------- */
+
+window.onYouTubeIframeAPIReady =
+    function () {
+
+        createMahalayaPlayer();
+
+    };
 
 
 /* -----------------------------
@@ -649,16 +695,16 @@ function onYouTubeReady(event) {
 
     event.target.setVolume(100);
 
-    loadMahalayaSong();
+    updateMahalayaInfo();
 
 }
 
 
 /* -----------------------------
-   LOAD SONG INFORMATION
+   UPDATE SONG INFO
 ----------------------------- */
 
-function loadMahalayaSong() {
+function updateMahalayaInfo() {
 
     const song =
         mahalayaSongs[
@@ -706,17 +752,6 @@ function loadMahalayaSong() {
     }
 
 
-    if (youtubePlayer) {
-
-        youtubePlayer.loadVideoById(
-            song.youtubeId
-        );
-
-        youtubePlayer.pauseVideo();
-
-    }
-
-
     if (playButton) {
 
         playButton.textContent =
@@ -731,93 +766,108 @@ function loadMahalayaSong() {
    PLAY / PAUSE
 ----------------------------- */
 
-window.togglePlay = function () {
+window.togglePlay =
+    function () {
 
-    if (!youtubePlayer) {
-        return;
-    }
+        if (!youtubePlayer) {
 
+            console.log(
+                "YouTube player এখনও ready নয়।"
+            );
 
-    const state =
-        youtubePlayer.getPlayerState();
-
-
-    if (
-        state ===
-        YT.PlayerState.PLAYING
-    ) {
-
-        youtubePlayer.pauseVideo();
-
-
-        if (playButton) {
-
-            playButton.textContent =
-                "▶";
+            return;
 
         }
 
-    } else {
 
-        youtubePlayer.playVideo();
+        const state =
+            youtubePlayer.getPlayerState();
 
 
-        if (playButton) {
+        if (
+            state ===
+            YT.PlayerState.PLAYING
+        ) {
 
-            playButton.textContent =
-                "⏸";
+            youtubePlayer.pauseVideo();
+
+        } else {
+
+            youtubePlayer.playVideo();
 
         }
 
-    }
-
-};
+    };
 
 
 /* -----------------------------
    PREVIOUS
 ----------------------------- */
 
-window.previousSong = function () {
+window.previousSong =
+    function () {
 
-    mahalayaIndex--;
-
-
-    if (mahalayaIndex < 0) {
-
-        mahalayaIndex =
-            mahalayaSongs.length - 1;
-
-    }
+        mahalayaIndex--;
 
 
-    loadMahalayaSong();
+        if (mahalayaIndex < 0) {
 
-};
+            mahalayaIndex =
+                mahalayaSongs.length - 1;
+
+        }
+
+
+        if (youtubePlayer) {
+
+            youtubePlayer.loadVideoById(
+                mahalayaSongs[
+                    mahalayaIndex
+                ].youtubeId
+            );
+
+        }
+
+
+        updateMahalayaInfo();
+
+    };
 
 
 /* -----------------------------
    NEXT
 ----------------------------- */
 
-window.nextSong = function () {
+window.nextSong =
+    function () {
 
-    mahalayaIndex++;
-
-
-    if (
-        mahalayaIndex >=
-        mahalayaSongs.length
-    ) {
-
-        mahalayaIndex = 0;
-
-    }
+        mahalayaIndex++;
 
 
-    loadMahalayaSong();
+        if (
+            mahalayaIndex >=
+            mahalayaSongs.length
+        ) {
 
-};
+            mahalayaIndex = 0;
+
+        }
+
+
+        if (youtubePlayer) {
+
+            youtubePlayer.loadVideoById(
+                mahalayaSongs[
+                    mahalayaIndex
+                ].youtubeId
+            );
+
+        }
+
+
+        updateMahalayaInfo();
+
+    };
 
 
 /* -----------------------------
@@ -861,7 +911,7 @@ function onYouTubeStateChange(event) {
         YT.PlayerState.ENDED
     ) {
 
-        nextSong();
+        window.nextSong();
 
     }
 
@@ -869,59 +919,72 @@ function onYouTubeStateChange(event) {
 
 
 /* -----------------------------
-   UPDATE PROGRESS
+   PROGRESS UPDATE
 ----------------------------- */
 
-setInterval(function () {
+setInterval(
+    function () {
 
-    if (
-        !youtubePlayer ||
-        !youtubePlayer.getCurrentTime
-    ) {
-        return;
-    }
+        if (
+            !youtubePlayer ||
+            typeof youtubePlayer.getCurrentTime !==
+                "function"
+        ) {
 
+            return;
 
-    const current =
-        youtubePlayer.getCurrentTime();
-
-    const total =
-        youtubePlayer.getDuration();
+        }
 
 
-    if (!total) {
-        return;
-    }
+        const current =
+            youtubePlayer.getCurrentTime();
 
 
-    const percent =
-        (current / total) * 100;
+        const total =
+            youtubePlayer.getDuration();
 
 
-    if (progressBar) {
+        if (!total) {
 
-        progressBar.style.width =
-            percent + "%";
+            return;
 
-    }
-
-
-    if (currentTime) {
-
-        currentTime.textContent =
-            formatTime(current);
-
-    }
+        }
 
 
-    if (duration) {
+        const percent =
+            (
+                current /
+                total
+            ) * 100;
 
-        duration.textContent =
-            formatTime(total);
 
-    }
+        if (progressBar) {
 
-}, 500);
+            progressBar.style.width =
+                percent + "%";
+
+        }
+
+
+        if (currentTime) {
+
+            currentTime.textContent =
+                formatTime(current);
+
+        }
+
+
+        if (duration) {
+
+            duration.textContent =
+                formatTime(total);
+
+        }
+
+    },
+
+    500
+);
 
 
 /* -----------------------------
@@ -935,7 +998,9 @@ if (volumeSlider) {
         function () {
 
             if (!youtubePlayer) {
+
                 return;
+
             }
 
 
@@ -947,7 +1012,6 @@ if (volumeSlider) {
     );
 
 }
-
     /* =====================================================
        6. BISORJONI MUSIC
     ===================================================== */
@@ -1276,8 +1340,6 @@ if (volumeSlider) {
     ===================================================== */
 
     loadPrePujaSong();
-
-    loadMahalayaSong();
 
     loadBisorjoniSong();
 
