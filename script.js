@@ -555,301 +555,398 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    /* =====================================================
-       5. MAHALAYA MUSIC
-    ===================================================== */
+/* =====================================================
+   5. MAHALAYA MUSIC - YOUTUBE
+===================================================== */
 
-    const mahalayaSongs = [
+const mahalayaSongs = [
 
+    {
+        title: "মহালয়ার আগমনী",
+        artist: "Birendra Krishna Bhadra",
+        youtubeId: "YQyo8QeoYhc"
+    }
+
+];
+
+
+let mahalayaIndex = 0;
+let youtubePlayer = null;
+
+
+/* -----------------------------
+   HTML ELEMENTS
+----------------------------- */
+
+const playButton =
+    document.getElementById("playButton");
+
+const songTitle =
+    document.getElementById("songTitle");
+
+const songArtist =
+    document.getElementById("songArtist");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const currentTime =
+    document.getElementById("currentTime");
+
+const duration =
+    document.getElementById("duration");
+
+const volumeSlider =
+    document.getElementById("volumeSlider");
+
+
+/* -----------------------------
+   LOAD YOUTUBE API
+----------------------------- */
+
+function onYouTubeIframeAPIReady() {
+
+    youtubePlayer = new YT.Player(
+        "youtubePlayer",
         {
-            title: "মহালয়ার আগমনী",
-            artist: "Mahalaya Hits",
-            src: "music/mahalaya1.mp3"
-        },
 
-        {
-            title: "আগমনী গান",
-            artist: "Mahalaya Hits",
-            src: "music/mahalaya2.mp3"
-        },
+            height: "1",
+            width: "1",
 
-        {
-            title: "মহালয়ার সুর",
-            artist: "Mahalaya Hits",
-            src: "music/mahalaya3.mp3"
-        }
+            videoId:
+                mahalayaSongs[
+                    mahalayaIndex
+                ].youtubeId,
 
-    ];
+            playerVars: {
 
+                autoplay: 0,
+                controls: 0,
+                rel: 0
 
-    let mahalayaIndex = 0;
+            },
 
+            events: {
 
-    const musicAudio =
-        document.getElementById(
-            "musicPlayer"
-        );
+                onReady: onYouTubeReady,
 
+                onStateChange:
+                    onYouTubeStateChange
 
-    const playButton =
-        document.getElementById(
-            "playButton"
-        );
-
-
-    const songTitle =
-        document.getElementById(
-            "songTitle"
-        );
-
-
-    const songArtist =
-        document.getElementById(
-            "songArtist"
-        );
-
-
-    const progressBar =
-        document.getElementById(
-            "progressBar"
-        );
-
-
-    const currentTime =
-        document.getElementById(
-            "currentTime"
-        );
-
-
-    const duration =
-        document.getElementById(
-            "duration"
-        );
-
-
-    const volumeSlider =
-        document.getElementById(
-            "volumeSlider"
-        );
-
-
-    function loadMahalayaSong() {
-
-        if (!musicAudio) {
-            return;
-        }
-
-
-        const song =
-            mahalayaSongs[mahalayaIndex];
-
-
-        musicAudio.src =
-            song.src;
-
-
-        if (songTitle) {
-
-            songTitle.textContent =
-                song.title;
+            }
 
         }
+    );
+
+}
 
 
-        if (songArtist) {
+/* -----------------------------
+   PLAYER READY
+----------------------------- */
 
-            songArtist.textContent =
-                song.artist;
+function onYouTubeReady(event) {
 
-        }
+    event.target.setVolume(100);
 
+    loadMahalayaSong();
 
-        if (progressBar) {
-
-            progressBar.style.width =
-                "0%";
-
-        }
+}
 
 
-        musicAudio.load();
+/* -----------------------------
+   LOAD SONG INFORMATION
+----------------------------- */
+
+function loadMahalayaSong() {
+
+    const song =
+        mahalayaSongs[
+            mahalayaIndex
+        ];
+
+
+    if (songTitle) {
+
+        songTitle.textContent =
+            song.title;
 
     }
 
 
-    window.togglePlay =
+    if (songArtist) {
+
+        songArtist.textContent =
+            song.artist;
+
+    }
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            "0%";
+
+    }
+
+
+    if (currentTime) {
+
+        currentTime.textContent =
+            "0:00";
+
+    }
+
+
+    if (duration) {
+
+        duration.textContent =
+            "0:00";
+
+    }
+
+
+    if (youtubePlayer) {
+
+        youtubePlayer.loadVideoById(
+            song.youtubeId
+        );
+
+        youtubePlayer.pauseVideo();
+
+    }
+
+
+    if (playButton) {
+
+        playButton.textContent =
+            "▶";
+
+    }
+
+}
+
+
+/* -----------------------------
+   PLAY / PAUSE
+----------------------------- */
+
+window.togglePlay = function () {
+
+    if (!youtubePlayer) {
+        return;
+    }
+
+
+    const state =
+        youtubePlayer.getPlayerState();
+
+
+    if (
+        state ===
+        YT.PlayerState.PLAYING
+    ) {
+
+        youtubePlayer.pauseVideo();
+
+
+        if (playButton) {
+
+            playButton.textContent =
+                "▶";
+
+        }
+
+    } else {
+
+        youtubePlayer.playVideo();
+
+
+        if (playButton) {
+
+            playButton.textContent =
+                "⏸";
+
+        }
+
+    }
+
+};
+
+
+/* -----------------------------
+   PREVIOUS
+----------------------------- */
+
+window.previousSong = function () {
+
+    mahalayaIndex--;
+
+
+    if (mahalayaIndex < 0) {
+
+        mahalayaIndex =
+            mahalayaSongs.length - 1;
+
+    }
+
+
+    loadMahalayaSong();
+
+};
+
+
+/* -----------------------------
+   NEXT
+----------------------------- */
+
+window.nextSong = function () {
+
+    mahalayaIndex++;
+
+
+    if (
+        mahalayaIndex >=
+        mahalayaSongs.length
+    ) {
+
+        mahalayaIndex = 0;
+
+    }
+
+
+    loadMahalayaSong();
+
+};
+
+
+/* -----------------------------
+   YOUTUBE STATE
+----------------------------- */
+
+function onYouTubeStateChange(event) {
+
+    if (
+        event.data ===
+        YT.PlayerState.PLAYING
+    ) {
+
+        if (playButton) {
+
+            playButton.textContent =
+                "⏸";
+
+        }
+
+    }
+
+
+    if (
+        event.data ===
+        YT.PlayerState.PAUSED
+    ) {
+
+        if (playButton) {
+
+            playButton.textContent =
+                "▶";
+
+        }
+
+    }
+
+
+    if (
+        event.data ===
+        YT.PlayerState.ENDED
+    ) {
+
+        nextSong();
+
+    }
+
+}
+
+
+/* -----------------------------
+   UPDATE PROGRESS
+----------------------------- */
+
+setInterval(function () {
+
+    if (
+        !youtubePlayer ||
+        !youtubePlayer.getCurrentTime
+    ) {
+        return;
+    }
+
+
+    const current =
+        youtubePlayer.getCurrentTime();
+
+    const total =
+        youtubePlayer.getDuration();
+
+
+    if (!total) {
+        return;
+    }
+
+
+    const percent =
+        (current / total) * 100;
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            percent + "%";
+
+    }
+
+
+    if (currentTime) {
+
+        currentTime.textContent =
+            formatTime(current);
+
+    }
+
+
+    if (duration) {
+
+        duration.textContent =
+            formatTime(total);
+
+    }
+
+}, 500);
+
+
+/* -----------------------------
+   VOLUME
+----------------------------- */
+
+if (volumeSlider) {
+
+    volumeSlider.addEventListener(
+        "input",
         function () {
 
-            if (!musicAudio) {
+            if (!youtubePlayer) {
                 return;
             }
 
 
-            if (musicAudio.paused) {
+            youtubePlayer.setVolume(
+                Number(this.value) * 100
+            );
 
-                musicAudio.play()
-                    .then(function () {
+        }
+    );
 
-                        if (playButton) {
-
-                            playButton.textContent =
-                                "⏸";
-
-                        }
-
-                    })
-                    .catch(function (error) {
-
-                        console.log(
-                            "Mahalaya music error:",
-                            error
-                        );
-
-                        alert(
-                            "Mahalaya music file পাওয়া যাচ্ছে না।"
-                        );
-
-                    });
-
-            } else {
-
-                musicAudio.pause();
-
-
-                if (playButton) {
-
-                    playButton.textContent =
-                        "▶";
-
-                }
-
-            }
-
-        };
-
-
-    window.previousSong =
-        function () {
-
-            mahalayaIndex--;
-
-
-            if (mahalayaIndex < 0) {
-
-                mahalayaIndex =
-                    mahalayaSongs.length - 1;
-
-            }
-
-
-            loadMahalayaSong();
-
-        };
-
-
-    window.nextSong =
-        function () {
-
-            mahalayaIndex++;
-
-
-            if (
-                mahalayaIndex >=
-                mahalayaSongs.length
-            ) {
-
-                mahalayaIndex = 0;
-
-            }
-
-
-            loadMahalayaSong();
-
-        };
-
-
-    if (musicAudio) {
-
-        musicAudio.addEventListener(
-            "loadedmetadata",
-            function () {
-
-                if (duration) {
-
-                    duration.textContent =
-                        formatTime(
-                            musicAudio.duration
-                        );
-
-                }
-
-            }
-        );
-
-
-        musicAudio.addEventListener(
-            "timeupdate",
-            function () {
-
-                if (
-                    !musicAudio.duration ||
-                    !progressBar
-                ) {
-                    return;
-                }
-
-
-                const percent =
-                    (
-                        musicAudio.currentTime /
-                        musicAudio.duration
-                    ) * 100;
-
-
-                progressBar.style.width =
-                    percent + "%";
-
-
-                if (currentTime) {
-
-                    currentTime.textContent =
-                        formatTime(
-                            musicAudio.currentTime
-                        );
-
-                }
-
-            }
-        );
-
-
-        musicAudio.addEventListener(
-            "ended",
-            function () {
-
-                window.nextSong();
-
-            }
-        );
-
-    }
-
-
-    if (volumeSlider && musicAudio) {
-
-        volumeSlider.addEventListener(
-            "input",
-            function () {
-
-                musicAudio.volume =
-                    this.value;
-
-            }
-        );
-
-    }
-
-
+}
 
     /* =====================================================
        6. BISORJONI MUSIC
