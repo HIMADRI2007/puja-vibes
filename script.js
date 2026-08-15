@@ -197,276 +197,138 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-   /* =====================================================
-   4. PRE-PUJA MUSIC - YOUTUBE PLAYLIST
-===================================================== */
+    /* =====================================================
+       4. PRE-PUJA MUSIC
+    ===================================================== */
 
-const prePujaPlaylistId =
-    "PLdAdiBMufabJxPH5nj6ZTW_D5jBKX8V5Y";
+    const prePujaSongs = [
 
+        {
+            title: "পুজোর আগমনী",
+            artist: "Pre-Puja Vibes",
+            src: "music/puja1.mp3"
+        },
 
-let prePujaPlayer = null;
+        {
+            title: "মা আসছে",
+            artist: "Pre-Puja Vibes",
+            src: "music/puja2.mp3"
+        },
 
+        {
+            title: "আগমনী সুর",
+            artist: "Pre-Puja Vibes",
+            src: "music/puja3.mp3"
+        }
 
-/* -----------------------------
-   HTML ELEMENTS
------------------------------ */
-
-const prePujaPlayButton =
-    document.getElementById(
-        "prePujaPlayButton"
-    );
-
-const prePujaTitle =
-    document.getElementById(
-        "prePujaSongTitle"
-    );
-
-const prePujaArtist =
-    document.getElementById(
-        "prePujaSongArtist"
-    );
-
-const prePujaProgress =
-    document.getElementById(
-        "prePujaProgressBar"
-    );
-
-const prePujaCurrentTime =
-    document.getElementById(
-        "prePujaCurrentTime"
-    );
-
-const prePujaDuration =
-    document.getElementById(
-        "prePujaDuration"
-    );
-
-const prePujaVolume =
-    document.getElementById(
-        "prePujaVolumeSlider"
-    );
+    ];
 
 
-/* -----------------------------
-   CREATE PLAYER
------------------------------ */
-
-function createPrePujaPlayer() {
-
-    if (
-        typeof YT === "undefined" ||
-        !YT.Player
-    ) {
-        console.log(
-            "YouTube API এখনও load হয়নি।"
-        );
-
-        return;
-    }
+    let prePujaIndex = 0;
 
 
-    const element =
+    const prePujaAudio =
         document.getElementById(
-            "prePujaYoutubePlayer"
+            "prePujaMusicPlayer"
         );
 
 
-    if (!element) {
-
-        console.log(
-            "prePujaYoutubePlayer পাওয়া যায়নি।"
+    const prePujaPlayButton =
+        document.getElementById(
+            "prePujaPlayButton"
         );
 
-        return;
 
-    }
-
-
-    prePujaPlayer =
-        new YT.Player(
-            "prePujaYoutubePlayer",
-            {
-
-                height: "1",
-
-                width: "1",
-
-                playerVars: {
-
-                    autoplay: 0,
-
-                    controls: 0,
-
-                    listType: "playlist",
-
-                    list:
-                        prePujaPlaylistId,
-
-                    rel: 0
-
-                },
-
-                events: {
-
-                    onReady:
-                        onPrePujaReady,
-
-                    onStateChange:
-                        onPrePujaStateChange
-
-                }
-
-            }
+    const prePujaTitle =
+        document.getElementById(
+            "prePujaSongTitle"
         );
 
-}
+
+    const prePujaArtist =
+        document.getElementById(
+            "prePujaSongArtist"
+        );
 
 
-/* -----------------------------
-   YOUTUBE API CALLBACK
------------------------------ */
-
-window.onYouTubeIframeAPIReady =
-    function () {
-
-        createPrePujaPlayer();
-
-    };
+    const prePujaProgress =
+        document.getElementById(
+            "prePujaProgressBar"
+        );
 
 
-/* -----------------------------
-   PLAYER READY
------------------------------ */
-
-function onPrePujaReady(event) {
-
-    event.target.setVolume(100);
+    const prePujaCurrentTime =
+        document.getElementById(
+            "prePujaCurrentTime"
+        );
 
 
-    if (prePujaTitle) {
-
-        prePujaTitle.textContent =
-            "Pre-Puja Hits";
-
-    }
+    const prePujaDuration =
+        document.getElementById(
+            "prePujaDuration"
+        );
 
 
-    if (prePujaArtist) {
-
-        prePujaArtist.textContent =
-            "YouTube Playlist";
-
-    }
+    const prePujaVolume =
+        document.getElementById(
+            "prePujaVolumeSlider"
+        );
 
 
-    if (prePujaPlayButton) {
+    function loadPrePujaSong() {
 
-        prePujaPlayButton.textContent =
-            "▶";
-
-    }
-
-}
-
-
-/* -----------------------------
-   PLAY / PAUSE
------------------------------ */
-
-window.togglePrePujaPlay =
-    function () {
-
-        if (!prePujaPlayer) {
-
+        if (!prePujaAudio) {
             return;
+        }
+
+
+        const song =
+            prePujaSongs[prePujaIndex];
+
+
+        prePujaAudio.src =
+            song.src;
+
+
+        if (prePujaTitle) {
+
+            prePujaTitle.textContent =
+                song.title;
 
         }
 
 
-        const state =
-            prePujaPlayer.getPlayerState();
+        if (prePujaArtist) {
 
-
-        if (
-            state ===
-            YT.PlayerState.PLAYING
-        ) {
-
-            prePujaPlayer.pauseVideo();
-
-        } else {
-
-            prePujaPlayer.playVideo();
-
-        }
-
-    };
-
-
-/* -----------------------------
-   PREVIOUS
------------------------------ */
-
-window.previousPrePujaSong =
-    function () {
-
-        if (!prePujaPlayer) {
-
-            return;
+            prePujaArtist.textContent =
+                song.artist;
 
         }
 
 
-        prePujaPlayer.previousVideo();
+        if (prePujaProgress) {
 
-    };
-
-
-/* -----------------------------
-   NEXT
------------------------------ */
-
-window.nextPrePujaSong =
-    function () {
-
-        if (!prePujaPlayer) {
-
-            return;
+            prePujaProgress.style.width =
+                "0%";
 
         }
 
 
-        prePujaPlayer.nextVideo();
+        if (prePujaCurrentTime) {
 
-    };
-
-
-/* -----------------------------
-   STATE CHANGE
------------------------------ */
-
-function onPrePujaStateChange(event) {
-
-    if (
-        event.data ===
-        YT.PlayerState.PLAYING
-    ) {
-
-        if (prePujaPlayButton) {
-
-            prePujaPlayButton.textContent =
-                "⏸";
+            prePujaCurrentTime.textContent =
+                "0:00";
 
         }
 
-    }
 
+        if (prePujaDuration) {
 
-    if (
-        event.data ===
-        YT.PlayerState.PAUSED
-    ) {
+            prePujaDuration.textContent =
+                "0:00";
+
+        }
+
 
         if (prePujaPlayButton) {
 
@@ -475,119 +337,209 @@ function onPrePujaStateChange(event) {
 
         }
 
-    }
 
-
-    if (
-        event.data ===
-        YT.PlayerState.ENDED
-    ) {
-
-        if (prePujaPlayer) {
-
-            prePujaPlayer.nextVideo();
-
-        }
+        prePujaAudio.load();
 
     }
 
-}
 
-
-/* -----------------------------
-   PROGRESS
------------------------------ */
-
-setInterval(
-    function () {
-
-        if (
-            !prePujaPlayer ||
-            typeof prePujaPlayer.getCurrentTime !==
-                "function"
-        ) {
-
-            return;
-
-        }
-
-
-        const current =
-            prePujaPlayer.getCurrentTime();
-
-
-        const total =
-            prePujaPlayer.getDuration();
-
-
-        if (!total) {
-
-            return;
-
-        }
-
-
-        const percent =
-            (
-                current /
-                total
-            ) * 100;
-
-
-        if (prePujaProgress) {
-
-            prePujaProgress.style.width =
-                percent + "%";
-
-        }
-
-
-        if (prePujaCurrentTime) {
-
-            prePujaCurrentTime.textContent =
-                formatTime(current);
-
-        }
-
-
-        if (prePujaDuration) {
-
-            prePujaDuration.textContent =
-                formatTime(total);
-
-        }
-
-    },
-
-    500
-);
-
-
-/* -----------------------------
-   VOLUME
------------------------------ */
-
-if (prePujaVolume) {
-
-    prePujaVolume.addEventListener(
-        "input",
+    window.togglePrePujaPlay =
         function () {
 
-            if (!prePujaPlayer) {
-
+            if (!prePujaAudio) {
                 return;
+            }
+
+
+            if (prePujaAudio.paused) {
+
+                prePujaAudio.play()
+                    .then(function () {
+
+                        if (prePujaPlayButton) {
+
+                            prePujaPlayButton.textContent =
+                                "⏸";
+
+                        }
+
+                    })
+                    .catch(function (error) {
+
+                        console.log(
+                            "Pre-Puja music error:",
+                            error
+                        );
+
+                        alert(
+                            "puja1.mp3 / puja2.mp3 / puja3.mp3 ফাইলের নাম এবং location check করো।"
+                        );
+
+                    });
+
+            } else {
+
+                prePujaAudio.pause();
+
+
+                if (prePujaPlayButton) {
+
+                    prePujaPlayButton.textContent =
+                        "▶";
+
+                }
+
+            }
+
+        };
+
+
+    window.previousPrePujaSong =
+        function () {
+
+            if (!prePujaSongs.length) {
+                return;
+            }
+
+
+            prePujaIndex--;
+
+
+            if (prePujaIndex < 0) {
+
+                prePujaIndex =
+                    prePujaSongs.length - 1;
 
             }
 
 
-            prePujaPlayer.setVolume(
-                Number(this.value) * 100
-            );
+            loadPrePujaSong();
 
-        }
-    );
 
-}
+            prePujaAudio.play()
+                .then(function () {
+
+                    if (prePujaPlayButton) {
+
+                        prePujaPlayButton.textContent =
+                            "⏸";
+
+                    }
+
+                })
+                .catch(function () {});
+
+        };
+
+
+    window.nextPrePujaSong =
+        function () {
+
+            if (!prePujaSongs.length) {
+                return;
+            }
+
+
+            prePujaIndex++;
+
+
+            if (
+                prePujaIndex >=
+                prePujaSongs.length
+            ) {
+
+                prePujaIndex = 0;
+
+            }
+
+
+            loadPrePujaSong();
+
+
+            prePujaAudio.play()
+                .then(function () {
+
+                    if (prePujaPlayButton) {
+
+                        prePujaPlayButton.textContent =
+                            "⏸";
+
+                    }
+
+                })
+                .catch(function () {});
+
+        };
+
+
+    if (prePujaAudio) {
+
+        prePujaAudio.addEventListener(
+            "loadedmetadata",
+            function () {
+
+                if (prePujaDuration) {
+
+                    prePujaDuration.textContent =
+                        formatTime(
+                            prePujaAudio.duration
+                        );
+
+                }
+
+            }
+        );
+
+
+        prePujaAudio.addEventListener(
+            "timeupdate",
+            function () {
+
+                if (
+                    !prePujaAudio.duration ||
+                    !prePujaProgress
+                ) {
+                    return;
+                }
+
+
+                const percent =
+                    (
+                        prePujaAudio.currentTime /
+                        prePujaAudio.duration
+                    ) * 100;
+
+
+                prePujaProgress.style.width =
+                    percent + "%";
+
+
+                if (prePujaCurrentTime) {
+
+                    prePujaCurrentTime.textContent =
+                        formatTime(
+                            prePujaAudio.currentTime
+                        );
+
+                }
+
+            }
+        );
+
+
+        prePujaAudio.addEventListener(
+            "ended",
+            function () {
+
+                window.nextPrePujaSong();
+
+            }
+        );
+
+    }
+
+
+    if (prePujaVolume && prePujaAudio) {
 
         prePujaVolume.addEventListener(
             "input",
@@ -612,7 +564,7 @@ const mahalayaSongs = [
     {
         title: "মহালয়ার আগমনী",
         artist: "Birendra Krishna Bhadra",
-        youtubeId: "YQyo8QeoYhc"
+        youtubeId: "YQyo8QeoYhc"https://youtu.be/YQyo8QeoYhc?si=aQMA4pz1YYucVlX0
     }
 
 ];
