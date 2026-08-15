@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Puja Vibes</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<!-- ======================================================
+     HOME PAGE
+====================================================== -->
+
+<section id="home">
+
+    <!-- MAIN BENGALI HEADING -->
+
+    <h2>মা আসছে...</h2>
+
+    <p>
+        পুজোর গন্ধে ভরে উঠুক চারপাশ...
+    </p>
+
+
+    <!-- ==================================================
+         DURGA PUJA COUNTDOWN
+    =================================================== -->
+
+    <div class="home-countdown">
+
+        <div class="countdown-title">
+            DURGA PUJA IS COMING
+        </div>
+
+        <div class="countdown-heading">
+            দুর্গাপুজো আসছে... 🌺
+        </div>
+
+        <div class="countdown-subtitle">
+            আর মাত্র অপেক্ষা...
+        </div>
+
+
+        <div class="countdown-boxes">
+
+            <div class="countdown-box">
+
+                <div id="days">
+                    00
+                </div>
+
+                <span>DAYS</span>
+
+            </div>
+
+
+            <div class="countdown-box">
+
+                <div id="hours">
+                    00
+                </div>
+
+                <span>HOURS</span>
+
+            </div>
+
+
+            <div class="countdown-box">
+
+                <div id="minutes">
+                    00
+                </div>
+
+                <span>MINUTES</span>
+
+            </div>
+
+
+            <div class="countdown-box">
+
+                <div id="seconds">
+                    00
+                </div>
+
+                <span>SECONDS</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         THREE SECTION CARDS
+    =================================================== -->
+
+    <div class="section-cards">
+
+
+        <!-- PRE PUJA -->
+
+        <a href="#pre-puja-music"
+           class="section-card">
+
+            <div class="card-icon">
+                🌺
+            </div>
+
+            <h3>
+                PRE-PUJA VIBES
+            </h3>
+
+            <span>
+                মা আসছে
+            </span>
+
+        </a>
+
+
+        <!-- MAHALAYA -->
+
+        <a href="#mahalaya"
+           class="section-card">
+
+            <div class="card-icon">
+                🌙
+            </div>
+
+            <h3>
+                MAHALAYA
+            </h3>
+
+            <span>
+                আগমনী সুর
+            </span>
+
+        </a>
+
+
+        <!-- BISORJONI -->
+
+        <a href="#bisorjoni"
+           class="section-card">
+
+            <div class="card-icon">
+                🪔
+            </div>
+
+            <h3>
+                BISORJONI
+            </h3>
+
+            <span>
+                আবার এসো মা
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- ==================================================
+         HOME CREDITS
+    =================================================== -->
+
+    <div class="home-credit credit-left">
+        Thanks to Sagnil Dutta
+    </div>
+
+    <div class="home-credit credit-right">
+        Made by Himadri Roy
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     PRE-PUJA SECTION
+====================================================== -->
+
+<section id="pre-puja-music">
+
+
+    <h1>
+        PRE-PUJA VIBES
+    </h1>
+
+
+    <p>
+        পুজোর আগমনের সুরে শুরু হোক অপেক্ষা...
+    </p>
+
+
+    <!-- MUSIC PLAYER -->
+
+    <div class="music-player">
+
+
+        <div class="music-icon">
+
+            <div class="music-disc">
+                🌺
+            </div>
+
+        </div>
+
+
+        <div class="now-playing">
+
+            <span class="playing-dot"></span>
+
+            NOW PLAYING
+
+        </div>
+
+
+        <h2 id="prePujaSongTitle">
+            পুজোর আগমনী
+        </h2>
+
+
+        <p id="prePujaSongArtist">
+            Pre-Puja Vibes
+        </p>
+
+
+        <div class="progress-container">
+
+            <div id="prePujaProgressBar"></div>
+
+        </div>
+
+
+        <div class="time-container">
+
+            <span id="prePujaCurrentTime">
+                0:00
+            </span>
+
+            <span id="prePujaDuration">
+                0:00
+            </span>
+
+        </div>
+
+
+        <div class="player-controls">
+
+
+            <button
+                class="control-button"
+                onclick="previousPrePujaSong()">
+
+                ⏮
+
+            </button>
+
+
+            <button
+                class="play-button"
+                id="prePujaPlayButton"
+                onclick="togglePrePujaPlay()">
+
+                ▶
+
+            </button>
+
+
+            <button
+                class="control-button"
+                onclick="nextPrePujaSong()">
+
+                ⏭
+
+            </button>
+
+
+        </div>
+
+
+        <div class="volume-control">
+
+            🔊
+
+            <input
+                type="range"
+                id="prePujaVolumeSlider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1">
+
+        </div>
+
+
+    </div>
+
+
+    <!-- HOME BUTTON -->
+
+    <div class="back-home-container">
+
+        <div class="back-home-arrow">
+            ↑
+        </div>
+
+        <button
+            class="back-home"
+            onclick="goHome()">
+
+            HOME
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     MAHALAYA SECTION
+====================================================== -->
+
+<section id="mahalaya">
+
+
+    <h1>
+        MAHALAYA
+    </h1>
+
+
+    <p>
+        মহালয়ার আগমনী সুর...
+    </p>
+
+
+    <div class="music-player">
+
+
+        <div class="music-icon">
+
+            <div class="music-disc">
+                🌙
+            </div>
+
+        </div>
+
+
+        <div class="now-playing">
+
+            <span class="playing-dot"></span>
+
+            NOW PLAYING
+
+        </div>
+
+
+        <h2 id="songTitle">
+            মহালয়ার আগমনী
+        </h2>
+
+
+        <p id="songArtist">
+            Mahalaya Hits
+        </p>
+
+
+        <div class="progress-container">
+
+            <div id="progressBar"></div>
+
+        </div>
+
+
+        <div class="time-container">
+
+            <span id="currentTime">
+                0:00
+            </span>
+
+            <span id="duration">
+                0:00
+            </span>
+
+        </div>
+
+
+        <div class="player-controls">
+
+
+            <button
+                class="control-button"
+                onclick="previousSong()">
+
+                ⏮
+
+            </button>
+
+
+            <button
+                class="play-button"
+                id="playButton"
+                onclick="togglePlay()">
+
+                ▶
+
+            </button>
+
+
+            <button
+                class="control-button"
+                onclick="nextSong()">
+
+                ⏭
+
+            </button>
+
+
+        </div>
+
+
+        <div class="volume-control">
+
+            🔊
+
+            <input
+                type="range"
+                id="volumeSlider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1">
+
+        </div>
+
+
+    </div>
+
+
+    <!-- HOME BUTTON -->
+
+    <div class="back-home-container">
+
+        <div class="back-home-arrow">
+            ↑
+        </div>
+
+        <button
+            class="back-home"
+            onclick="goHome()">
+
+            HOME
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     BISORJONI SECTION
+====================================================== -->
+
+<section id="bisorjoni">
+
+
+    <h1>
+        BISORJONI
+    </h1>
+
+
+    <p>
+        আবার এসো মা...
+    </p>
+
+
+    <div class="music-player">
+
+
+        <div class="music-icon">
+
+            <div class="music-disc">
+                🪔
+            </div>
+
+        </div>
+
+
+        <div class="now-playing">
+
+            <span class="playing-dot"></span>
+
+            NOW PLAYING
+
+        </div>
+
+
+        <h2 id="bisorjoniSongTitle">
+            বিসর্জনের গান
+        </h2>
+
+
+        <p id="bisorjoniSongArtist">
+            Bisorjoni Songs
+        </p>
+
+
+        <div class="progress-container">
+
+            <div id="bisorjoniProgressBar"></div>
+
+        </div>
+
+
+        <div class="time-container">
+
+            <span id="bisorjoniCurrentTime">
+                0:00
+            </span>
+
+            <span id="bisorjoniDuration">
+                0:00
+            </span>
+
+        </div>
+
+
+        <div class="player-controls">
+
+
+            <button
+                class="control-button"
+                onclick="previousBisorjoniSong()">
+
+                ⏮
+
+            </button>
+
+
+            <button
+                class="play-button"
+                id="bisorjoniPlayButton"
+                onclick="toggleBisorjoniPlay()">
+
+                ▶
+
+            </button>
+
+
+            <button
+                class="control-button"
+                onclick="nextBisorjoniSong()">
+
+                ⏭
+
+            </button>
+
+
+        </div>
+
+
+        <div class="volume-control">
+
+            🔊
+
+            <input
+                type="range"
+                id="bisorjoniVolumeSlider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1">
+
+        </div>
+
+
+    </div>
+
+
+    <!-- HOME BUTTON -->
+
+    <div class="back-home-container">
+
+        <div class="back-home-arrow">
+            ↑
+        </div>
+
+        <button
+            class="back-home"
+            onclick="goHome()">
+
+            HOME
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     AUDIO ELEMENTS
+====================================================== -->
+
+<audio id="prePujaMusicPlayer"></audio>
+
+<audio id="musicPlayer"></audio>
+
+<audio id="bisorjoniMusicPlayer"></audio>
+
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
