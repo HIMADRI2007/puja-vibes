@@ -197,12 +197,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =====================================================
-   4. PRE-PUJA MUSIC - YOUTUBE PLAYLIST
+   4. PRE-PUJA MUSIC - SINGLE YOUTUBE SONG
 ===================================================== */
 
-const prePujaPlaylistId =
-    "xlElO06nQy8";
-
+const prePujaVideoId = "xlElO06nQy8";
 
 let prePujaPlayer = null;
 
@@ -212,39 +210,25 @@ let prePujaPlayer = null;
 ----------------------------- */
 
 const prePujaPlayButton =
-    document.getElementById(
-        "prePujaPlayButton"
-    );
+    document.getElementById("prePujaPlayButton");
 
 const prePujaTitle =
-    document.getElementById(
-        "prePujaSongTitle"
-    );
+    document.getElementById("prePujaSongTitle");
 
 const prePujaArtist =
-    document.getElementById(
-        "prePujaSongArtist"
-    );
+    document.getElementById("prePujaSongArtist");
 
 const prePujaProgress =
-    document.getElementById(
-        "prePujaProgressBar"
-    );
+    document.getElementById("prePujaProgressBar");
 
 const prePujaCurrentTime =
-    document.getElementById(
-        "prePujaCurrentTime"
-    );
+    document.getElementById("prePujaCurrentTime");
 
 const prePujaDuration =
-    document.getElementById(
-        "prePujaDuration"
-    );
+    document.getElementById("prePujaDuration");
 
 const prePujaVolume =
-    document.getElementById(
-        "prePujaVolumeSlider"
-    );
+    document.getElementById("prePujaVolumeSlider");
 
 
 /* -----------------------------
@@ -257,68 +241,44 @@ function createPrePujaPlayer() {
         typeof YT === "undefined" ||
         !YT.Player
     ) {
-        console.log(
-            "YouTube API এখনও load হয়নি।"
-        );
-
+        console.log("YouTube API এখনও load হয়নি।");
         return;
     }
-
 
     const element =
-        document.getElementById(
-            "prePujaYoutubePlayer"
-        );
-
+        document.getElementById("prePujaYoutubePlayer");
 
     if (!element) {
-
-        console.log(
-            "prePujaYoutubePlayer পাওয়া যায়নি।"
-        );
-
+        console.log("prePujaYoutubePlayer পাওয়া যায়নি।");
         return;
-
     }
 
+    prePujaPlayer = new YT.Player(
+        "prePujaYoutubePlayer",
+        {
 
-    prePujaPlayer =
-        new YT.Player(
-            "prePujaYoutubePlayer",
-            {
+            height: "1",
+            width: "1",
 
-                height: "1",
+            videoId: prePujaVideoId,
 
-                width: "1",
+            playerVars: {
+                autoplay: 0,
+                controls: 0,
+                rel: 0
+            },
 
-                playerVars: {
+            events: {
 
-                    autoplay: 0,
+                onReady: onPrePujaReady,
 
-                    controls: 0,
-
-                    listType: "playlist",
-
-                    list:
-                        prePujaPlaylistId,
-
-                    rel: 0
-
-                },
-
-                events: {
-
-                    onReady:
-                        onPrePujaReady,
-
-                    onStateChange:
-                        onPrePujaStateChange
-
-                }
+                onStateChange:
+                    onPrePujaStateChange
 
             }
-        );
 
+        }
+    );
 }
 
 
@@ -330,30 +290,20 @@ function onPrePujaReady(event) {
 
     event.target.setVolume(100);
 
-
     if (prePujaTitle) {
-
         prePujaTitle.textContent =
             "Pre-Puja Hits";
-
     }
-
 
     if (prePujaArtist) {
-
         prePujaArtist.textContent =
-            "YouTube Playlist";
-
+            "Pre-Puja Vibes";
     }
-
 
     if (prePujaPlayButton) {
-
         prePujaPlayButton.textContent =
             "▶";
-
     }
-
 }
 
 
@@ -361,72 +311,27 @@ function onPrePujaReady(event) {
    PLAY / PAUSE
 ----------------------------- */
 
-window.togglePrePujaPlay =
-    function () {
+window.togglePrePujaPlay = function () {
 
-        if (!prePujaPlayer) {
+    if (!prePujaPlayer) {
+        console.log("Pre-Puja player এখনও ready নয়।");
+        return;
+    }
 
-            return;
+    const state =
+        prePujaPlayer.getPlayerState();
 
-        }
+    if (state === YT.PlayerState.PLAYING) {
 
+        prePujaPlayer.pauseVideo();
 
-        const state =
-            prePujaPlayer.getPlayerState();
+    } else {
 
+        prePujaPlayer.playVideo();
 
-        if (
-            state ===
-            YT.PlayerState.PLAYING
-        ) {
+    }
 
-            prePujaPlayer.pauseVideo();
-
-        } else {
-
-            prePujaPlayer.playVideo();
-
-        }
-
-    };
-
-
-/* -----------------------------
-   PREVIOUS
------------------------------ */
-
-window.previousPrePujaSong =
-    function () {
-
-        if (!prePujaPlayer) {
-
-            return;
-
-        }
-
-
-        prePujaPlayer.previousVideo();
-
-    };
-
-
-/* -----------------------------
-   NEXT
------------------------------ */
-
-window.nextPrePujaSong =
-    function () {
-
-        if (!prePujaPlayer) {
-
-            return;
-
-        }
-
-
-        prePujaPlayer.nextVideo();
-
-    };
+};
 
 
 /* -----------------------------
@@ -441,14 +346,10 @@ function onPrePujaStateChange(event) {
     ) {
 
         if (prePujaPlayButton) {
-
-            prePujaPlayButton.textContent =
-                "⏸";
-
+            prePujaPlayButton.textContent = "⏸";
         }
 
     }
-
 
     if (
         event.data ===
@@ -456,24 +357,18 @@ function onPrePujaStateChange(event) {
     ) {
 
         if (prePujaPlayButton) {
-
-            prePujaPlayButton.textContent =
-                "▶";
-
+            prePujaPlayButton.textContent = "▶";
         }
 
     }
-
 
     if (
         event.data ===
         YT.PlayerState.ENDED
     ) {
 
-        if (prePujaPlayer) {
-
-            prePujaPlayer.nextVideo();
-
+        if (prePujaPlayButton) {
+            prePujaPlayButton.textContent = "▶";
         }
 
     }
@@ -485,69 +380,51 @@ function onPrePujaStateChange(event) {
    PROGRESS
 ----------------------------- */
 
-setInterval(
-    function () {
+setInterval(function () {
 
-        if (
-            !prePujaPlayer ||
-            typeof prePujaPlayer.getCurrentTime !==
-                "function"
-        ) {
+    if (
+        !prePujaPlayer ||
+        typeof prePujaPlayer.getCurrentTime !==
+        "function"
+    ) {
+        return;
+    }
 
-            return;
+    const current =
+        prePujaPlayer.getCurrentTime();
 
-        }
+    const total =
+        prePujaPlayer.getDuration();
 
+    if (!total) {
+        return;
+    }
 
-        const current =
-            prePujaPlayer.getCurrentTime();
+    const percent =
+        (current / total) * 100;
 
+    if (prePujaProgress) {
 
-        const total =
-            prePujaPlayer.getDuration();
+        prePujaProgress.style.width =
+            percent + "%";
 
+    }
 
-        if (!total) {
+    if (prePujaCurrentTime) {
 
-            return;
+        prePujaCurrentTime.textContent =
+            formatTime(current);
 
-        }
+    }
 
+    if (prePujaDuration) {
 
-        const percent =
-            (
-                current /
-                total
-            ) * 100;
+        prePujaDuration.textContent =
+            formatTime(total);
 
+    }
 
-        if (prePujaProgress) {
-
-            prePujaProgress.style.width =
-                percent + "%";
-
-        }
-
-
-        if (prePujaCurrentTime) {
-
-            prePujaCurrentTime.textContent =
-                formatTime(current);
-
-        }
-
-
-        if (prePujaDuration) {
-
-            prePujaDuration.textContent =
-                formatTime(total);
-
-        }
-
-    },
-
-    500
-);
+}, 500);
 
 
 /* -----------------------------
@@ -561,11 +438,8 @@ if (prePujaVolume) {
         function () {
 
             if (!prePujaPlayer) {
-
                 return;
-
             }
-
 
             prePujaPlayer.setVolume(
                 Number(this.value) * 100
@@ -575,7 +449,6 @@ if (prePujaVolume) {
     );
 
 }
-
 
 /* =====================================================
    5. MAHALAYA MUSIC - YOUTUBE
