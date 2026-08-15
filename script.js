@@ -562,9 +562,9 @@ document.addEventListener("DOMContentLoaded", function () {
 const mahalayaSongs = [
 
     {
-        title: "মহালয়ার আগমনী",
+        title: "মহালয়ার আগমনী1",
         artist: "Birendra Krishna Bhadra",
-        youtubeId: "YQyo8QeoYhc"https://youtu.be/YQyo8QeoYhc?si=aQMA4pz1YYucVlX0
+        youtubeId: "YQyo8QeoYhc"
     }
 
 ];
