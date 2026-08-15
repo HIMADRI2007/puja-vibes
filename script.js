@@ -323,18 +323,6 @@ function createPrePujaPlayer() {
 
 
 /* -----------------------------
-   YOUTUBE API CALLBACK
------------------------------ */
-
-window.onYouTubeIframeAPIReady =
-    function () {
-
-        createPrePujaPlayer();
-
-    };
-
-
-/* -----------------------------
    PLAYER READY
 ----------------------------- */
 
@@ -717,6 +705,7 @@ window.onYouTubeIframeAPIReady =
     function () {
 
         createMahalayaPlayer();
+        createprepujaplayer();
 
     };
 
