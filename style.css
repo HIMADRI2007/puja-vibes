@@ -1017,8 +1017,8 @@ body {
 
 #youtubePlayer {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 200px;
+    height: 300px;
     opacity: 0;
     pointer-events: none;
 }
