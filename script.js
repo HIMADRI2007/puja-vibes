@@ -640,9 +640,9 @@ function createMahalayaPlayer() {
             "youtubePlayer",
             {
 
-                height: "1",
+                height: "200",
 
-                width: "1",
+                width: "300",
 
                 videoId:
                     mahalayaSongs[
