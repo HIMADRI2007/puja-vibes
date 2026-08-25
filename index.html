@@ -5,181 +5,144 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Puja Vibes</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&display=swap"
+          rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-    
 </head>
 
 <body>
 
 
-<!-- ======================================================
-     HOME PAGE
-====================================================== -->
+<!-- =====================================================
+     HOME
+===================================================== -->
 
-<section id="home">
+<section id="home" class="hero-section">
 
-    <!-- MAIN BENGALI HEADING -->
+    <nav class="top-nav">
 
-    <h2>মা আসছে...</h2>
+        <a href="#pre-puja-music">
+            Pre-Puja
+        </a>
 
-    <p>
-        পুজোর গন্ধে ভরে উঠুক চারপাশ...
-    </p>
+        <a href="#mahalaya">
+            Mahalaya
+        </a>
 
+        <a href="#bisorjoni">
+            Bisorjoni
+        </a>
 
-    <!-- ==================================================
-         DURGA PUJA COUNTDOWN
-    =================================================== -->
+        <a href="#admin">
+            Admin
+        </a>
 
-    <div class="home-countdown">
-
-        <div class="countdown-title">
-            DURGA PUJA IS COMING
-        </div>
-
-        <div class="countdown-heading">
-            দুর্গাপুজো আসছে... 🌺
-        </div>
-
-        <div class="countdown-subtitle">
-            আর মাত্র অপেক্ষা...
-        </div>
+    </nav>
 
 
-        <div class="countdown-boxes">
+    <div class="hero-content">
 
-            <div class="countdown-box">
+        <h1>
+            PRE-PUJA VIBES
+        </h1>
 
-                <div id="days">
-                    00
+        <h2>
+            মা আসছে...
+        </h2>
+
+        <p>
+            পুজোর গন্ধে ভরে উঠুক চারপাশ
+        </p>
+
+
+        <div class="section-cards">
+
+            <a href="#pre-puja-music"
+               class="section-card">
+
+                <div class="card-icon">
+                    🌺
                 </div>
 
-                <span>DAYS</span>
+                <h3>
+                    PRE-PUJA
+                </h3>
 
-            </div>
+                <span>
+                    VIBES
+                </span>
+
+            </a>
 
 
-            <div class="countdown-box">
+            <a href="#mahalaya"
+               class="section-card">
 
-                <div id="hours">
-                    00
+                <div class="card-icon">
+                    🌙
                 </div>
 
-                <span>HOURS</span>
+                <h3>
+                    MAHALAYA
+                </h3>
 
-            </div>
+                <span>
+                    HITS
+                </span>
+
+            </a>
 
 
-            <div class="countdown-box">
+            <a href="#bisorjoni"
+               class="section-card">
 
-                <div id="minutes">
-                    00
+                <div class="card-icon">
+                    🪔
                 </div>
 
-                <span>MINUTES</span>
+                <h3>
+                    BISORJONI
+                </h3>
 
-            </div>
+                <span>
+                    SONGS
+                </span>
 
-
-            <div class="countdown-box">
-
-                <div id="seconds">
-                    00
-                </div>
-
-                <span>SECONDS</span>
-
-            </div>
+            </a>
 
         </div>
 
     </div>
 
 
-    <!-- ==================================================
-         THREE SECTION CARDS
-    =================================================== -->
+    <div class="listener-box">
 
-    <div class="section-cards">
+        <span class="online-dot"></span>
 
-
-        <!-- PRE PUJA -->
-
-        <a href="#pre-puja-music"
-           class="section-card">
-
-            <div class="card-icon">
-                🌺
-            </div>
-
-            <h3>
-                PRE-PUJA VIBES
-            </h3>
-
-            <span>
-                মা আসছে
-            </span>
-
-        </a>
-
-
-        <!-- MAHALAYA -->
-
-        <a href="#mahalaya"
-           class="section-card">
-
-            <div class="card-icon">
-                🌙
-            </div>
-
-            <h3>
-                MAHALAYA
-            </h3>
-
-            <span>
-                আগমনী সুর
-            </span>
-
-        </a>
-
-
-        <!-- BISORJONI -->
-
-        <a href="#bisorjoni"
-           class="section-card">
-
-            <div class="card-icon">
-                🪔
-            </div>
-
-            <h3>
-                BISORJONI
-            </h3>
-
-            <span>
-                আবার এসো মা
-            </span>
-
-        </a>
-
+        <span>
+            <strong id="listenerCount">0</strong>
+            listening now
+        </span>
 
     </div>
 
-
-    <!-- ==================================================
-         HOME CREDITS
-    =================================================== -->
 
     <div class="home-credit credit-left">
         Thanks to Sagnil Dutta
     </div>
+
 
     <div class="home-credit credit-right">
         Made by Himadri Roy
@@ -189,458 +152,577 @@
 
 
 
-<!-- ======================================================
-     PRE-PUJA SECTION
-====================================================== -->
+<!-- =====================================================
+     PRE PUJA
+===================================================== -->
 
-<section id="pre-puja-music">
+<section id="pre-puja-music"
+         class="music-section pre-puja-section">
+
+    <div class="section-inner">
+
+        <a href="#home"
+           class="back-home">
+            ← Back to Home
+        </a>
+
+        <h1>
+            PRE-PUJA VIBES
+        </h1>
+
+        <p class="section-subtitle">
+            পুজোর আগমনের সুরে শুরু হোক অপেক্ষা...
+        </p>
 
 
-    <h1>
-        PRE-PUJA VIBES
-    </h1>
+        <div class="music-player">
 
-
-    <p>
-        পুজোর আগমনের সুরে শুরু হোক অপেক্ষা...
-    </p>
-
-
-    <!-- MUSIC PLAYER -->
-
-    <div class="music-player">
-
-<div id="prePujaYoutubePlayer"></div>
-        
-        <div class="music-icon">
-
-            <div class="music-disc">
+            <div class="music-icon">
                 🌺
             </div>
 
-        </div>
+            <h2 id="prePujaSongTitle">
+                No song added
+            </h2>
+
+            <p id="prePujaSongArtist">
+                Pre-Puja Vibes
+            </p>
 
 
-        <div class="now-playing">
-
-            <span class="playing-dot"></span>
-
-            NOW PLAYING
-
-        </div>
+            <div class="youtube-player-wrap">
+                <div id="prePujaYoutubePlayer"></div>
+            </div>
 
 
-        <h2 id="prePujaSongTitle">
-            পুজোর আগমনী
-        </h2>
+            <div class="progress-container"
+                 id="prePujaProgressContainer">
+
+                <div id="prePujaProgressBar"></div>
+
+            </div>
 
 
-        <p id="prePujaSongArtist">
-            Pre-Puja Vibes
-        </p>
+            <div class="time-container">
+
+                <span id="prePujaCurrentTime">
+                    0:00
+                </span>
+
+                <span id="prePujaDuration">
+                    0:00
+                </span>
+
+            </div>
 
 
-        <div class="progress-container">
+            <div class="player-controls">
 
-            <div id="prePujaProgressBar"></div>
+                <button
+                    onclick="previousSong('prePuja')"
+                    class="control-button">
+                    ⏮
+                </button>
 
-        </div>
+                <button
+                    onclick="togglePlay('prePuja')"
+                    class="play-button"
+                    id="prePujaPlayButton">
+                    ▶
+                </button>
 
+                <button
+                    onclick="nextSong('prePuja')"
+                    class="control-button">
+                    ⏭
+                </button>
 
-        <div class="time-container">
-
-            <span id="prePujaCurrentTime">
-                0:00
-            </span>
-
-            <span id="prePujaDuration">
-                0:00
-            </span>
-
-        </div>
-
-
-        <div class="player-controls">
-
-
-            <button
-                class="control-button"
-                onclick="previousPrePujaSong()">
-
-                ⏮
-
-            </button>
+            </div>
 
 
-            <button
-                class="play-button"
-                id="prePujaPlayButton"
-                onclick="togglePrePujaPlay()">
+            <div class="volume-control">
 
-                ▶
+                🔊
 
-            </button>
+                <input
+                    type="range"
+                    id="prePujaVolumeSlider"
+                    min="0"
+                    max="100"
+                    value="100">
 
-
-            <button
-                class="control-button"
-                onclick="nextPrePujaSong()">
-
-                ⏭
-
-            </button>
+            </div>
 
 
-        </div>
+            <div class="playlist-box">
 
+                <h3>
+                    🎵 Playlist
+                </h3>
 
-        <div class="volume-control">
+                <div
+                    id="prePujaPlaylist"
+                    class="playlist">
+                </div>
 
-            🔊
-
-            <input
-                type="range"
-                id="prePujaVolumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1">
+            </div>
 
         </div>
-
 
     </div>
-
-
-    <!-- HOME BUTTON -->
-
-    <div class="back-home-container">
-
-        <div class="back-home-arrow">
-            ↑
-        </div>
-
-        <button
-            class="back-home"
-            onclick="goHome()">
-
-            HOME
-
-        </button>
-
-    </div>
-
 
 </section>
 
 
 
-<!-- ======================================================
-     MAHALAYA SECTION
-====================================================== -->
+<!-- =====================================================
+     MAHALAYA
+===================================================== -->
 
-<section id="mahalaya">
+<section id="mahalaya"
+         class="music-section mahalaya-section">
+
+    <div class="section-inner">
+
+        <a href="#home"
+           class="back-home">
+            ← Back to Home
+        </a>
+
+        <h1>
+            MAHALAYA HITS
+        </h1>
+
+        <p class="section-subtitle">
+            মহালয়ার সুরে শুরু হোক পুজোর অপেক্ষা...
+        </p>
 
 
-    <h1>
-        MAHALAYA
-    </h1>
+        <div class="music-player">
 
-
-    <p>
-        মহালয়ার আগমনী সুর...
-    </p>
-
-
-    <div class="music-player">
-
-        <div id="youtubePlayer"></div>
-
-        <div class="music-icon">
-
-            <div class="music-disc">
+            <div class="music-icon">
                 🌙
             </div>
 
-        </div>
+            <h2 id="mahalayaSongTitle">
+                No song added
+            </h2>
 
+            <p id="mahalayaSongArtist">
+                Mahalaya Hits
+            </p>
 
-        <div class="now-playing">
 
-            <span class="playing-dot"></span>
+            <div class="youtube-player-wrap">
+                <div id="mahalayaYoutubePlayer"></div>
+            </div>
 
-            NOW PLAYING
 
-        </div>
+            <div class="progress-container"
+                 id="mahalayaProgressContainer">
 
+                <div id="mahalayaProgressBar"></div>
 
-        <h2 id="songTitle">
-            মহালয়ার আগমনী
-        </h2>
+            </div>
 
 
-        <p id="songArtist">
-            Mahalaya Hits
-        </p>
+            <div class="time-container">
 
+                <span id="mahalayaCurrentTime">
+                    0:00
+                </span>
 
-        <div class="progress-container">
+                <span id="mahalayaDuration">
+                    0:00
+                </span>
 
-            <div id="progressBar"></div>
+            </div>
 
-        </div>
 
+            <div class="player-controls">
 
-        <div class="time-container">
+                <button
+                    onclick="previousSong('mahalaya')"
+                    class="control-button">
+                    ⏮
+                </button>
 
-            <span id="currentTime">
-                0:00
-            </span>
+                <button
+                    onclick="togglePlay('mahalaya')"
+                    class="play-button"
+                    id="mahalayaPlayButton">
+                    ▶
+                </button>
 
-            <span id="duration">
-                0:00
-            </span>
+                <button
+                    onclick="nextSong('mahalaya')"
+                    class="control-button">
+                    ⏭
+                </button>
 
-        </div>
+            </div>
 
 
-        <div class="player-controls">
+            <div class="volume-control">
 
+                🔊
 
-            <button
-                class="control-button"
-                onclick="previousSong()">
+                <input
+                    type="range"
+                    id="mahalayaVolumeSlider"
+                    min="0"
+                    max="100"
+                    value="100">
 
-                ⏮
+            </div>
 
-            </button>
 
+            <div class="playlist-box">
 
-            <button
-                class="play-button"
-                id="playButton"
-                onclick="togglePlay()">
+                <h3>
+                    🎵 Playlist
+                </h3>
 
-                ▶
+                <div
+                    id="mahalayaPlaylist"
+                    class="playlist">
+                </div>
 
-            </button>
-
-
-            <button
-                class="control-button"
-                onclick="nextSong()">
-
-                ⏭
-
-            </button>
-
-
-        </div>
-
-
-        <div class="volume-control">
-
-            🔊
-
-            <input
-                type="range"
-                id="volumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1">
-
-        </div>
-
-
-    </div>
-
-
-    <!-- HOME BUTTON -->
-
-    <div class="back-home-container">
-
-        <div class="back-home-arrow">
-            ↑
-        </div>
-
-        <button
-            class="back-home"
-            onclick="goHome()">
-
-            HOME
-
-        </button>
-
-    </div>
-
-
-</section>
-
-
-
-<!-- ======================================================
-     BISORJONI SECTION
-====================================================== -->
-
-<section id="bisorjoni">
-
-
-    <h1>
-        BISORJONI
-    </h1>
-
-
-    <p>
-        আবার এসো মা...
-    </p>
-
-
-    <div class="music-player">
-
-
-        <div class="music-icon">
-
-            <div class="music-disc">
-                🪔
             </div>
 
         </div>
 
-
-        <div class="now-playing">
-
-            <span class="playing-dot"></span>
-
-            NOW PLAYING
-
-        </div>
-
-
-        <h2 id="bisorjoniSongTitle">
-            বিসর্জনের গান
-        </h2>
-
-
-        <p id="bisorjoniSongArtist">
-            Bisorjoni Songs
-        </p>
-
-
-        <div class="progress-container">
-
-            <div id="bisorjoniProgressBar"></div>
-
-        </div>
-
-
-        <div class="time-container">
-
-            <span id="bisorjoniCurrentTime">
-                0:00
-            </span>
-
-            <span id="bisorjoniDuration">
-                0:00
-            </span>
-
-        </div>
-
-
-        <div class="player-controls">
-
-
-            <button
-                class="control-button"
-                onclick="previousBisorjoniSong()">
-
-                ⏮
-
-            </button>
-
-
-            <button
-                class="play-button"
-                id="bisorjoniPlayButton"
-                onclick="toggleBisorjoniPlay()">
-
-                ▶
-
-            </button>
-
-
-            <button
-                class="control-button"
-                onclick="nextBisorjoniSong()">
-
-                ⏭
-
-            </button>
-
-
-        </div>
-
-
-        <div class="volume-control">
-
-            🔊
-
-            <input
-                type="range"
-                id="bisorjoniVolumeSlider"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1">
-
-        </div>
-
-
     </div>
-
-
-    <!-- HOME BUTTON -->
-
-    <div class="back-home-container">
-
-        <div class="back-home-arrow">
-            ↑
-        </div>
-
-        <button
-            class="back-home"
-            onclick="goHome()">
-
-            HOME
-
-        </button>
-
-    </div>
-
 
 </section>
 
 
 
-<!-- ======================================================
-     AUDIO ELEMENTS
-====================================================== -->
+<!-- =====================================================
+     BISORJONI
+===================================================== -->
 
-<audio id="prePujaMusicPlayer"></audio>
+<section id="bisorjoni"
+         class="music-section bisorjoni-section">
 
-<audio id="musicPlayer"></audio>
+    <div class="section-inner">
 
-<audio id="bisorjoniMusicPlayer"></audio>
+        <a href="#home"
+           class="back-home">
+            ← Back to Home
+        </a>
+
+        <h1>
+            BISORJONI SONGS
+        </h1>
+
+        <p class="section-subtitle">
+            আবার এসো মা...
+        </p>
+
+
+        <div class="music-player">
+
+            <div class="music-icon">
+                🪔
+            </div>
+
+            <h2 id="bisorjoniSongTitle">
+                No song added
+            </h2>
+
+            <p id="bisorjoniSongArtist">
+                Bisorjoni Songs
+            </p>
+
+
+            <div class="youtube-player-wrap">
+                <div id="bisorjoniYoutubePlayer"></div>
+            </div>
+
+
+            <div class="progress-container"
+                 id="bisorjoniProgressContainer">
+
+                <div id="bisorjoniProgressBar"></div>
+
+            </div>
+
+
+            <div class="time-container">
+
+                <span id="bisorjoniCurrentTime">
+                    0:00
+                </span>
+
+                <span id="bisorjoniDuration">
+                    0:00
+                </span>
+
+            </div>
+
+
+            <div class="player-controls">
+
+                <button
+                    onclick="previousSong('bisorjoni')"
+                    class="control-button">
+                    ⏮
+                </button>
+
+                <button
+                    onclick="togglePlay('bisorjoni')"
+                    class="play-button"
+                    id="bisorjoniPlayButton">
+                    ▶
+                </button>
+
+                <button
+                    onclick="nextSong('bisorjoni')"
+                    class="control-button">
+                    ⏭
+                </button>
+
+            </div>
+
+
+            <div class="volume-control">
+
+                🔊
+
+                <input
+                    type="range"
+                    id="bisorjoniVolumeSlider"
+                    min="0"
+                    max="100"
+                    value="100">
+
+            </div>
+
+
+            <div class="playlist-box">
+
+                <h3>
+                    🎵 Playlist
+                </h3>
+
+                <div
+                    id="bisorjoniPlaylist"
+                    class="playlist">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
 
-<!-- ======================================================
-     JAVASCRIPT
-====================================================== -->
+<!-- =====================================================
+     ADMIN
+===================================================== -->
 
-<script src="script.js"></script>
+<section id="admin"
+         class="admin-section">
+
+    <div class="admin-container">
+
+        <div class="admin-icon">
+            🔐
+        </div>
+
+        <h1>
+            ADMIN
+        </h1>
+
+        <p>
+            Authorized administrator only
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <div id="adminLogin"
+             class="admin-login">
+
+            <input
+                type="email"
+                id="adminEmail"
+                placeholder="Admin Email">
+
+            <input
+                type="password"
+                id="adminPassword"
+                placeholder="Admin Password">
+
+            <button id="adminLoginButton">
+                LOGIN
+            </button>
+
+            <p id="adminMessage"></p>
+
+        </div>
+
+
+        <!-- ADMIN PANEL -->
+
+        <div id="adminPanel"
+             class="admin-panel hidden">
+
+
+            <div class="admin-header">
+
+                <h2>
+                    🎛 Admin Panel
+                </h2>
+
+                <button
+                    id="adminLogoutButton">
+                    LOGOUT
+                </button>
+
+            </div>
+
+
+            <!-- PRE PUJA -->
+
+            <div class="admin-group">
+
+                <h3>
+                    🌺 Pre-Puja Vibes
+                </h3>
+
+                <div class="admin-add-row">
+
+                    <input
+                        type="text"
+                        id="adminPrePujaName"
+                        placeholder="Song name">
+
+                    <input
+                        type="url"
+                        id="adminPrePujaUrl"
+                        placeholder="YouTube URL">
+
+                    <button id="adminPrePujaAdd">
+                        ADD
+                    </button>
+
+                </div>
+
+                <div
+                    id="adminPrePujaList"
+                    class="admin-song-list">
+                </div>
+
+            </div>
+
+
+            <!-- MAHALAYA -->
+
+            <div class="admin-group">
+
+                <h3>
+                    🌙 Mahalaya Hits
+                </h3>
+
+                <div class="admin-add-row">
+
+                    <input
+                        type="text"
+                        id="adminMahalayaName"
+                        placeholder="Song name">
+
+                    <input
+                        type="url"
+                        id="adminMahalayaUrl"
+                        placeholder="YouTube URL">
+
+                    <button id="adminMahalayaAdd">
+                        ADD
+                    </button>
+
+                </div>
+
+                <div
+                    id="adminMahalayaList"
+                    class="admin-song-list">
+                </div>
+
+            </div>
+
+
+            <!-- BISORJONI -->
+
+            <div class="admin-group">
+
+                <h3>
+                    🪔 Bisorjoni Songs
+                </h3>
+
+                <div class="admin-add-row">
+
+                    <input
+                        type="text"
+                        id="adminBisorjoniName"
+                        placeholder="Song name">
+
+                    <input
+                        type="url"
+                        id="adminBisorjoniUrl"
+                        placeholder="YouTube URL">
+
+                    <button id="adminBisorjoniAdd">
+                        ADD
+                    </button>
+
+                </div>
+
+                <div
+                    id="adminBisorjoniList"
+                    class="admin-song-list">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <span>
+        Puja Vibes © 2026
+    </span>
+
+    <a href="#home">
+        ↑ Back to Top
+    </a>
+
+</footer>
+
+
+
+<!-- YOUTUBE -->
 
 <script src="https://www.youtube.com/iframe_api"></script>
+
+
+<!-- MAIN JS -->
+
+<script type="module"
+        src="script.js"></script>
 
 </body>
 
