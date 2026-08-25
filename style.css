@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&display=swap');
 
-
-/* ======================================================
-   BASIC
-====================================================== */
-
 * {
     box-sizing: border-box;
 }
@@ -15,223 +10,139 @@ html {
 
 body {
     margin: 0;
-
     font-family: Arial, sans-serif;
-
-    background: #000;
-
+    background: #160d08;
     color: white;
 }
 
-
-/* ======================================================
-   HOME
-====================================================== */
-
-#home {
-
-    min-height: 100vh;
-
-    padding: 35px 20px 70px;
-
-    background-image:
-        linear-gradient(
-            rgba(0, 0, 0, 0.42),
-            rgba(0, 0, 0, 0.42)
-        ),
-        url("puja-bg.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-repeat: no-repeat;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: flex-start;
-
-    text-align: center;
-
+section {
     position: relative;
-
+    min-height: 100vh;
     overflow: hidden;
 }
 
 
-/* ======================================================
-   HOME MAIN HEADING
-====================================================== */
+/* =====================================================
+   HOME
+===================================================== */
 
-#home h2 {
+.hero-section {
 
-    font-family: 'Noto Serif Bengali', serif;
+    min-height: 100vh;
 
-    font-size: 72px;
-
-    margin: 10px 0 5px;
-
-    font-weight: 700;
-
-    text-shadow:
-        0 0 10px rgba(255,255,255,0.7),
-        0 0 25px rgba(255,255,255,0.35);
-}
-
-
-/* HOME SUBTITLE */
-
-#home > p {
-
-    font-family: 'Noto Serif Bengali', serif;
-
-    font-size: 24px;
-
-    margin: 0 0 20px;
-
-}
-
-
-/* ======================================================
-   COUNTDOWN CARD
-====================================================== */
-
-.home-countdown {
-
-    width: min(720px, 90%);
-
-    padding: 22px 25px;
-
-    border-radius: 24px;
-
-    background: rgba(255,255,255,0.10);
-
-    border: 1px solid rgba(255,255,255,0.30);
-
-    backdrop-filter: blur(14px);
-
-    -webkit-backdrop-filter: blur(14px);
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.30),
-        inset 0 0 20px rgba(255,255,255,0.04);
-
-    margin-bottom: 25px;
-}
-
-
-/* COUNTDOWN SMALL TITLE */
-
-.countdown-title {
-
-    font-size: 10px;
-
-    letter-spacing: 4px;
-
-    opacity: 0.7;
-
-    margin-bottom: 10px;
-}
-
-
-/* COUNTDOWN HEADING */
-
-.countdown-heading {
-
-    font-family: 'Noto Serif Bengali', serif;
-
-    font-size: 24px;
-
-    font-weight: 700;
-
-    margin-bottom: 3px;
-
-    text-shadow:
-        0 0 10px rgba(255,255,255,0.5);
-}
-
-
-/* COUNTDOWN SUBTITLE */
-
-.countdown-subtitle {
-
-    font-family: 'Noto Serif Bengali', serif;
-
-    font-size: 14px;
-
-    opacity: 0.7;
-
-    margin-bottom: 16px;
-}
-
-
-/* ======================================================
-   COUNTDOWN BOXES
-====================================================== */
-
-.countdown-boxes {
+    background:
+        linear-gradient(
+            rgba(0,0,0,.48),
+            rgba(0,0,0,.55)
+        ),
+        url("home-bg.jpg")
+        center/cover no-repeat;
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    gap: 12px;
+    justify-content: center;
+
+    text-align: center;
 }
 
 
-.countdown-box {
+.top-nav {
 
-    width: 105px;
+    position: absolute;
 
-    padding: 13px 8px;
+    top: 22px;
 
-    border-radius: 16px;
+    left: 50%;
 
-    background: rgba(255,255,255,0.10);
+    transform: translateX(-50%);
 
-    border: 1px solid rgba(255,255,255,0.25);
+    display: flex;
 
-    box-shadow:
-        inset 0 0 15px rgba(255,255,255,0.04);
+    gap: 30px;
+
+    z-index: 10;
+
+    white-space: nowrap;
 }
 
 
-.countdown-box div {
+.top-nav a {
 
-    font-size: 30px;
+    color: white;
+
+    text-decoration: none;
 
     font-weight: 700;
 
-    line-height: 1.1;
+    font-size: 16px;
+
+    transition: .25s;
+}
+
+
+.top-nav a:hover {
+
+    transform: translateY(-2px);
 
     text-shadow:
-        0 0 10px rgba(255,255,255,0.5);
+        0 0 14px
+        rgba(255,255,255,.9);
 }
 
 
-.countdown-box span {
+.hero-content {
 
-    display: block;
+    width: min(1100px,94%);
 
-    margin-top: 6px;
+    padding-top: 50px;
+}
 
-    font-size: 9px;
+
+.hero-content h1 {
+
+    margin: 0;
+
+    font-size:
+        clamp(42px,6vw,76px);
 
     letter-spacing: 2px;
-
-    opacity: 0.65;
 }
 
 
-/* ======================================================
-   THREE CARDS
-====================================================== */
+.hero-content h2 {
+
+    margin: 24px 0 8px;
+
+    font-family:
+        'Noto Serif Bengali',
+        serif;
+
+    font-size:
+        clamp(48px,7vw,82px);
+
+    line-height: 1.15;
+
+    text-shadow:
+        0 0 20px
+        rgba(255,255,255,.5);
+}
+
+
+.hero-content p {
+
+    font-family:
+        'Noto Serif Bengali',
+        serif;
+
+    font-size:
+        clamp(19px,2.2vw,28px);
+
+    margin:
+        10px 0 35px;
+}
+
 
 .section-cards {
 
@@ -239,69 +150,61 @@ body {
 
     justify-content: center;
 
-    align-items: stretch;
-
     gap: 22px;
 
-    width: 90%;
-
-    max-width: 900px;
-
-    margin-top: 5px;
+    flex-wrap: wrap;
 }
 
 
 .section-card {
 
-    width: 240px;
+    width: 235px;
 
-    min-height: 165px;
+    min-height: 155px;
 
-    padding: 25px 15px;
+    padding: 25px 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
+    border-radius: 24px;
+
+    background:
+        rgba(25,13,8,.45);
+
+    backdrop-filter: blur(12px);
 
     color: white;
 
     text-decoration: none;
 
-    background: rgba(255,255,255,0.10);
+    transition: .3s ease;
 
-    border: 1px solid rgba(255,255,255,0.35);
-
-    border-radius: 22px;
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    transition:
-        transform 0.3s ease,
-        background 0.3s ease,
-        box-shadow 0.3s ease;
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.25);
 }
 
 
 .section-card:hover {
 
-    transform: translateY(-8px);
+    transform:
+        translateY(-8px)
+        scale(1.03);
 
-    background: rgba(255,255,255,0.17);
+    background:
+        rgba(55,28,15,.62);
 
     box-shadow:
-        0 18px 40px rgba(0,0,0,0.35);
+        0 0 30px
+        rgba(255,190,100,.22);
 }
 
 
 .card-icon {
 
-    font-size: 38px;
+    font-size: 35px;
 
     margin-bottom: 10px;
 }
@@ -311,7 +214,7 @@ body {
 
     margin: 0;
 
-    font-size: 21px;
+    font-size: 22px;
 
     letter-spacing: 1px;
 }
@@ -319,341 +222,330 @@ body {
 
 .section-card span {
 
-    margin-top: 7px;
+    display: block;
 
-    font-family: 'Noto Serif Bengali', serif;
+    margin-top: 5px;
 
-    font-size: 13px;
+    font-size: 14px;
 
-    opacity: 0.75;
+    letter-spacing: 4px;
+
+    opacity: .85;
 }
 
 
-/* ======================================================
-   HOME CREDITS
-====================================================== */
+/* LISTENER */
+
+.listener-box {
+
+    position: absolute;
+
+    left: 24px;
+
+    top: 75px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 13px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(0,0,0,.35);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 13px;
+}
+
+
+.online-dot {
+
+    width: 9px;
+
+    height: 9px;
+
+    background: #25d366;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 10px #25d366;
+}
+
 
 .home-credit {
 
-    position: fixed;
+    position: absolute;
 
-    bottom: 15px;
+    bottom: 17px;
 
-    font-size: 12px;
+    font-size: 13px;
 
-    color: rgba(255,255,255,0.85);
-
-    z-index: 10;
+    color:
+        rgba(255,255,255,.88);
 }
 
 
 .credit-left {
-    left: 18px;
+    left: 24px;
 }
-
 
 .credit-right {
-    right: 18px;
+    right: 24px;
 }
 
 
-/* ======================================================
-   COMMON SECTIONS
-====================================================== */
 
-#pre-puja-music,
-#mahalaya,
-#bisorjoni {
+/* =====================================================
+   MUSIC SECTIONS
+===================================================== */
 
-    min-height: 100vh;
+.music-section {
 
-    padding: 55px 20px 40px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        90px 20px 60px;
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+}
+
+
+.pre-puja-section {
+
+    background-image:
+        linear-gradient(
+            rgba(20,7,2,.58),
+            rgba(20,7,2,.72)
+        ),
+        url("pre-puja-bg.jpg");
+}
+
+
+.mahalaya-section {
+
+    background-image:
+        linear-gradient(
+            rgba(6,8,20,.60),
+            rgba(6,8,20,.75)
+        ),
+        url("mahalaya-bg.jpg");
+}
+
+
+.bisorjoni-section {
+
+    background-image:
+        linear-gradient(
+            rgba(15,5,4,.62),
+            rgba(15,5,4,.78)
+        ),
+        url("bisorjoni-bg.jpg");
+}
+
+
+.section-inner {
+
+    width:
+        min(850px,94%);
+
+    text-align: center;
+}
+
+
+.section-inner > h1 {
+
+    font-size:
+        clamp(38px,5vw,62px);
+
+    margin:
+        15px 0 5px;
+}
+
+
+.section-subtitle {
+
+    font-family:
+        'Noto Serif Bengali',
+        serif;
+
+    font-size: 21px;
+
+    margin:
+        0 0 25px;
+}
+
+
+.back-home {
+
+    display: inline-block;
 
     color: white;
 
-    display: flex;
+    text-decoration: none;
 
-    flex-direction: column;
+    border:
+        1px solid
+        rgba(255,255,255,.5);
 
-    justify-content: center;
+    padding:
+        9px 17px;
 
-    align-items: center;
+    border-radius: 20px;
 
-    text-align: center;
+    background:
+        rgba(0,0,0,.28);
 
-    position: relative;
+    transition: .25s;
 }
 
 
-/* ======================================================
-   PRE PUJA
-====================================================== */
+.back-home:hover {
 
-#pre-puja-music {
+    background:
+        rgba(255,255,255,.15);
 
-    background-image:
-        linear-gradient(
-            rgba(0,0,0,0.50),
-            rgba(0,0,0,0.50)
-        ),
-        url("pre-puja-bg.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-repeat: no-repeat;
+    transform:
+        translateY(-2px);
 }
 
 
-/* ======================================================
-   MAHALAYA
-====================================================== */
-
-#mahalaya {
-
-    background-image:
-        linear-gradient(
-            rgba(0,0,0,0.50),
-            rgba(0,0,0,0.50)
-        ),
-        url("mahalaya-bg.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-repeat: no-repeat;
-}
-
-
-/* ======================================================
-   BISORJONI
-====================================================== */
-
-#bisorjoni {
-
-    background-image:
-        linear-gradient(
-            rgba(0,0,0,0.50),
-            rgba(0,0,0,0.50)
-        ),
-        url("bisorjoni-bg.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
-    background-repeat: no-repeat;
-}
-
-
-/* ======================================================
-   SECTION HEADINGS
-====================================================== */
-
-#pre-puja-music h1,
-#mahalaya h1,
-#bisorjoni h1 {
-
-    font-size: 55px;
-
-    margin: 0 0 10px;
-
-    letter-spacing: 2px;
-}
-
-
-#pre-puja-music > p,
-#mahalaya > p,
-#bisorjoni > p {
-
-    font-family: 'Noto Serif Bengali', serif;
-
-    font-size: 23px;
-
-    margin: 0 0 25px;
-}
-
-
-/* ======================================================
-   MUSIC PLAYER
-====================================================== */
+/* PLAYER */
 
 .music-player {
 
-    width: 420px;
+    width:
+        min(690px,100%);
 
-    max-width: 90%;
+    margin:
+        28px auto 0;
 
-    padding: 30px;
+    padding: 28px;
 
-    background: rgba(255,255,255,0.10);
+    border:
+        1px solid
+        rgba(255,255,255,.25);
 
-    border: 1px solid rgba(255,255,255,0.30);
+    border-radius: 28px;
 
-    border-radius: 25px;
+    background:
+        rgba(15,10,8,.55);
 
-    backdrop-filter: blur(15px);
-
-    -webkit-backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,0.35);
-}
-
-
-/* ======================================================
-   MUSIC DISC
-====================================================== */
-
-.music-disc {
-
-    width: 95px;
-
-    height: 95px;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 42px;
-
-    background: rgba(255,255,255,0.10);
-
-    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter:
+        blur(15px);
 
     box-shadow:
-        0 0 15px rgba(255,255,255,0.20);
-
-    animation: discRotate 5s linear infinite;
-
-    animation-play-state: paused;
+        0 18px 55px
+        rgba(0,0,0,.35);
 }
 
 
-.music-disc.playing {
+.music-icon {
 
-    animation-play-state: running;
+    font-size: 48px;
+
+    margin-bottom: 8px;
 }
 
-
-@keyframes discRotate {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* ======================================================
-   NOW PLAYING
-====================================================== */
-
-.now-playing {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 7px;
-
-    margin-bottom: 10px;
-
-    font-size: 10px;
-
-    letter-spacing: 3px;
-
-    opacity: 0.75;
-}
-
-
-.playing-dot {
-
-    width: 7px;
-
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        0 0 8px rgba(255,255,255,0.8);
-}
-
-
-/* ======================================================
-   PLAYER TEXT
-====================================================== */
 
 .music-player h2 {
 
     margin: 5px 0;
 
-    font-size: 24px;
+    font-size: 25px;
 }
 
 
-.music-player p {
+.music-player > p {
 
-    margin: 5px 0 20px;
+    margin:
+        0 0 22px;
 
-    opacity: 0.7;
+    opacity: .8;
 }
 
 
-/* ======================================================
-   PROGRESS BAR
-====================================================== */
+/* Hidden Youtube */
+
+.youtube-player-wrap {
+
+    position: absolute;
+
+    width: 200px;
+
+    height: 200px;
+
+    left: -9999px;
+
+    top: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+
+.youtube-player-wrap iframe {
+
+    width: 200px !important;
+
+    height: 200px !important;
+}
+
+
+/* PROGRESS */
 
 .progress-container {
 
     width: 100%;
 
-    height: 7px;
+    height: 8px;
 
-    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
 
-    border-radius: 20px;
-
-    overflow: hidden;
+    background:
+        rgba(255,255,255,.2);
 
     cursor: pointer;
+
+    overflow: hidden;
 }
 
 
-#progressBar,
-#prePujaProgressBar,
-#bisorjoniProgressBar {
-
-    width: 0%;
+.progress-container > div {
 
     height: 100%;
 
-    background: white;
+    width: 0;
 
-    border-radius: 20px;
+    border-radius: inherit;
 
-    transition: width 0.1s linear;
+    background:
+        linear-gradient(
+            90deg,
+            #ffd27a,
+            #ff8b3d
+        );
+
+    transition:
+        width .1s linear;
 }
 
-
-/* ======================================================
-   TIME
-====================================================== */
 
 .time-container {
 
@@ -663,15 +555,11 @@ body {
 
     margin-top: 8px;
 
-    font-size: 12px;
+    font-size: 13px;
 
-    opacity: 0.7;
+    opacity: .85;
 }
 
-
-/* ======================================================
-   CONTROLS
-====================================================== */
 
 .player-controls {
 
@@ -681,9 +569,27 @@ body {
 
     align-items: center;
 
-    gap: 20px;
+    gap: 18px;
 
-    margin-top: 22px;
+    margin: 20px 0;
+}
+
+
+.control-button,
+.play-button {
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.08);
+
+    cursor: pointer;
+
+    transition: .2s;
 }
 
 
@@ -693,13 +599,478 @@ body {
 
     height: 45px;
 
-    border: none;
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+.play-button {
+
+    width: 62px;
+
+    height: 62px;
 
     border-radius: 50%;
 
-    background: rgba(255,255,255,0.12);
+    font-size: 23px;
+
+    background:
+        rgba(255,165,80,.22);
+}
+
+
+.control-button:hover,
+.play-button:hover {
+
+    transform: scale(1.08);
+
+    background:
+        rgba(255,255,255,.18);
+}
+
+
+.volume-control {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+}
+
+
+.volume-control input {
+
+    width: 150px;
+
+    cursor: pointer;
+}
+
+
+/* PLAYLIST */
+
+.playlist-box {
+
+    margin-top: 28px;
+
+    padding-top: 22px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.16);
+
+    text-align: left;
+}
+
+
+.playlist-box h3 {
+
+    margin:
+        0 0 12px;
+
+    text-align: center;
+}
+
+
+.playlist {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.playlist-item {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding:
+        10px 12px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    cursor: pointer;
+}
+
+
+.playlist-item.active {
+
+    background:
+        rgba(255,175,85,.18);
+}
+
+
+.playlist-song {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.playlist-song strong {
+
+    display: block;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.playlist-song small {
+
+    opacity: .55;
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+.admin-section {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        90px 20px 70px;
+
+    background:
+        linear-gradient(
+            rgba(10,5,2,.92),
+            rgba(20,8,3,.96)
+        );
+}
+
+
+.admin-container {
+
+    width:
+        min(850px,94%);
+
+    padding: 35px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.4);
+
+    text-align: center;
+}
+
+
+.admin-icon {
+
+    font-size: 48px;
+}
+
+
+.admin-container > h1 {
+
+    font-size: 45px;
+
+    margin:
+        10px 0 5px;
+}
+
+
+.admin-container > p {
+
+    opacity: .7;
+
+    margin-bottom: 28px;
+}
+
+
+.admin-login {
+
+    width:
+        min(400px,100%);
+
+    margin:
+        auto;
+}
+
+
+.admin-login input {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    margin-bottom: 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,0,0,.3);
 
     color: white;
+
+    outline: none;
+}
+
+
+.admin-login button {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background:
+        rgba(255,190,100,.9);
+
+    color: #241207;
+}
+
+
+#adminMessage {
+
+    min-height: 20px;
+
+    font-size: 13px;
+}
+
+
+.hidden {
+
+    display: none !important;
+}
+
+
+/* ADMIN PANEL */
+
+.admin-panel {
+
+    margin-top: 30px;
+
+    text-align: left;
+}
+
+
+.admin-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+.admin-header h2 {
+
+    margin: 0;
+}
+
+
+.admin-header button {
+
+    border: 0;
+
+    padding:
+        9px 15px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
+
+
+.admin-group {
+
+    margin-bottom: 25px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    border-radius: 18px;
+
+    background:
+        rgba(0,0,0,.18);
+}
+
+
+.admin-group h3 {
+
+    margin:
+        0 0 14px;
+}
+
+
+.admin-add-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.6fr auto;
+
+    gap: 8px;
+}
+
+
+.admin-add-row input {
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding:
+        11px 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    border-radius: 9px;
+
+    background:
+        rgba(0,0,0,.3);
+
+    color: white;
+
+    outline: none;
+}
+
+
+.admin-add-row button {
+
+    border: 0;
+
+    border-radius: 9px;
+
+    padding:
+        0 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background:
+        rgba(255,190,100,.9);
+
+    color: #241207;
+}
+
+
+.admin-song-list {
+
+    margin-top: 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.admin-song {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        10px 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.07);
+}
+
+
+.admin-song-info {
+
+    min-width: 0;
+}
+
+
+.admin-song-info strong {
+
+    display: block;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.admin-song-info small {
+
+    opacity: .5;
+}
+
+
+.delete-song {
+
+    border: 0;
+
+    background: transparent;
+
+    color: #ff9e8e;
 
     font-size: 18px;
 
@@ -707,234 +1078,85 @@ body {
 }
 
 
-.play-button {
+/* =====================================================
+   FOOTER
+===================================================== */
 
-    width: 60px;
+footer {
 
-    height: 60px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: white;
-
-    color: black;
-
-    font-size: 22px;
-
-    cursor: pointer;
-}
-
-
-.control-button:hover {
-
-    transform: scale(1.08);
-
-    background: rgba(255,255,255,0.25);
-}
-
-
-.play-button:hover {
-
-    transform: scale(1.08);
-}
-
-
-/* ======================================================
-   VOLUME
-====================================================== */
-
-.volume-control {
+    padding:
+        20px;
 
     display: flex;
 
-    justify-content: center;
+    justify-content: space-between;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 15px;
 
-    margin-top: 20px;
+    background: #0b0603;
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-size: 13px;
 }
 
 
-.volume-control input {
-
-    width: 120px;
-
-    cursor: pointer;
-}
-
-
-/* ======================================================
-   HOME BUTTON
-====================================================== */
-
-.back-home-container {
-
-    margin-top: 25px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-}
-
-
-.back-home-arrow {
-
-    font-size: 25px;
-
-    margin-bottom: 6px;
-
-    opacity: 0.8;
-
-    animation: arrowFloat 1.8s ease-in-out infinite;
-}
-
-
-@keyframes arrowFloat {
-
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-6px);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-}
-
-
-.back-home {
-
-    width: 72px;
-
-    height: 72px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255,255,255,0.55);
-
-    background: rgba(255,255,255,0.08);
+footer a {
 
     color: white;
 
-    font-size: 11px;
-
-    font-weight: 600;
-
-    letter-spacing: 2px;
-
-    cursor: pointer;
-
-    backdrop-filter: blur(12px);
-
-    -webkit-backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 0 10px rgba(255,255,255,0.25);
-
-    transition: 0.3s;
+    text-decoration: none;
 }
 
 
-.back-home:hover {
 
-    transform: scale(1.1);
-
-    background: rgba(255,255,255,0.17);
-
-    box-shadow:
-        0 0 25px rgba(255,255,255,0.55);
-}
-
-
-/* ======================================================
+/* =====================================================
    MOBILE
-====================================================== */
+===================================================== */
 
-@media (max-width: 700px) {
+@media (max-width:700px) {
 
+    .top-nav {
 
-    #home {
+        top: 15px;
 
-        padding-top: 25px;
+        width: 96%;
 
-        padding-bottom: 65px;
+        gap: 10px;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
     }
 
 
-    #home h2 {
+    .top-nav a {
 
-        font-size: 50px;
-
-        margin: 10px 0;
+        font-size: 11px;
     }
 
 
-    #home > p {
+    .listener-box {
 
-        font-size: 18px;
+        top: 58px;
 
-        margin-bottom: 18px;
+        left: 50%;
+
+        transform:
+            translateX(-50%);
     }
 
 
-    .home-countdown {
+    .hero-content {
 
-        width: 95%;
-
-        padding: 18px 10px;
-
-        margin-bottom: 20px;
-    }
-
-
-    .countdown-heading {
-
-        font-size: 20px;
-    }
-
-
-    .countdown-boxes {
-
-        gap: 5px;
-    }
-
-
-    .countdown-box {
-
-        width: 70px;
-
-        padding: 11px 4px;
-    }
-
-
-    .countdown-box div {
-
-        font-size: 22px;
-    }
-
-
-    .countdown-box span {
-
-        font-size: 7px;
-
-        letter-spacing: 1px;
+        padding-top: 100px;
     }
 
 
     .section-cards {
-
-        flex-direction: column;
-
-        align-items: center;
 
         gap: 12px;
     }
@@ -942,90 +1164,92 @@ body {
 
     .section-card {
 
-        width: min(85%, 300px);
+        width:
+            min(320px,90vw);
 
-        min-height: 105px;
-
-        padding: 15px;
-    }
-
-
-    .card-icon {
-
-        font-size: 28px;
-
-        margin-bottom: 4px;
-    }
-
-
-    .section-card h3 {
-
-        font-size: 17px;
-    }
-
-
-    .section-card span {
-
-        font-size: 11px;
+        min-height: 120px;
     }
 
 
     .home-credit {
 
-        font-size: 9px;
+        font-size: 10px;
 
-        bottom: 8px;
+        bottom: 12px;
     }
 
 
     .credit-left {
-
-        left: 8px;
+        left: 12px;
     }
 
 
     .credit-right {
-
-        right: 8px;
+        right: 12px;
     }
 
 
-    #pre-puja-music h1,
-    #mahalaya h1,
-    #bisorjoni h1 {
+    .music-section {
 
-        font-size: 35px;
-    }
+        background-attachment: scroll;
 
-
-    #pre-puja-music > p,
-    #mahalaya > p,
-    #bisorjoni > p {
-
-        font-size: 18px;
+        padding:
+            80px 12px 40px;
     }
 
 
     .music-player {
 
-        width: 92%;
+        padding:
+            20px 15px;
 
-        padding: 25px 20px;
+        border-radius: 22px;
     }
 
-}
 
-#youtubePlayer {
-    position: absolute;
-    width: 200px;
-    height: 300px;
-    opacity: 0;
-    pointer-events: none;
-}
-#prePujaYoutubePlayer {
-    position: absolute;
-    width: 200px;
-    height: 300px;
-    opacity: 0;
-    pointer-events: none;
+    .section-inner > h1 {
+
+        font-size: 35px;
+    }
+
+
+    .section-subtitle {
+
+        font-size: 17px;
+    }
+
+
+    .admin-container {
+
+        padding: 22px 15px;
+
+        border-radius: 22px;
+    }
+
+
+    .admin-add-row {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .admin-add-row button {
+
+        min-height: 42px;
+    }
+
+
+    .admin-header {
+
+        align-items: flex-start;
+    }
+
+
+    footer {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
 }
