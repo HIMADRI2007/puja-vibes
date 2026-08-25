@@ -1,1243 +1,1914 @@
-/* =========================================================
-   PUJA VIBES WEBSITE - COMPLETE JAVASCRIPT
-========================================================= */
+console.log("PUJA VIBES JS LOADED");
 
-document.addEventListener("DOMContentLoaded", function () {
+// ============================================================
+// PUJA VIBES - FINAL JAVASCRIPT
+// ============================================================
 
 
-    /* =====================================================
-       1. DURGA PUJA COUNTDOWN
-    ===================================================== */
+// ============================================================
+// FIREBASE
+// ============================================================
 
-    const pujaDate =
-        new Date("October 17, 2026 00:00:00").getTime();
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
+import {
+    getAuth,
+    signInAnonymously,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
-    function updatePujaCountdown() {
+import {
+    getDatabase,
+    ref,
+    push,
+    set,
+    remove,
+    onValue,
+    onDisconnect
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
-        const daysElement =
-            document.getElementById("days");
 
-        const hoursElement =
-            document.getElementById("hours");
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
 
-        const minutesElement =
-            document.getElementById("minutes");
+const firebaseConfig = {
 
-        const secondsElement =
-            document.getElementById("seconds");
+    apiKey:
+        "AIzaSyBlzp3ArNQ_GFGUs4TX14S_jjNB6z2eapE",
 
+    authDomain:
+        "puja-vibes.firebaseapp.com",
 
-        // যদি countdown HTML না পাওয়া যায়
-        if (
-            !daysElement ||
-            !hoursElement ||
-            !minutesElement ||
-            !secondsElement
-        ) {
-            return;
-        }
+    databaseURL:
+        "https://puja-vibes-default-rtdb.firebaseio.com/",
 
+    projectId:
+        "puja-vibes",
 
-        const now =
-            new Date().getTime();
+    storageBucket:
+        "puja-vibes.firebasestorage.app",
 
+    messagingSenderId:
+        "965137734407",
 
-        const difference =
-            pujaDate - now;
+    appId:
+        "1:965137734407:web:f56477342c47b863f6c3a2",
 
+    measurementId:
+        "G-5SYLJH7QFF"
+};
 
-        // Puja এসে গেলে
-        if (difference <= 0) {
 
-            daysElement.textContent = "00";
-            hoursElement.textContent = "00";
-            minutesElement.textContent = "00";
-            secondsElement.textContent = "00";
+// ============================================================
+// ADMIN UID
+// ============================================================
 
+const ADMIN_UID =
+    "YtBPHQ4BvobaWshSpJc6bPg19tv1";
 
-            const subtitle =
-                document.querySelector(
-                    ".countdown-subtitle"
-                );
 
+// ============================================================
+// FIREBASE INITIALIZE
+// ============================================================
 
-            if (subtitle) {
+const app =
+    initializeApp(firebaseConfig);
 
-                subtitle.textContent =
-                    "🌺 মা এসেছেন... শুভ মহাষষ্ঠী 🌺";
+const auth =
+    getAuth(app);
 
-            }
+const db =
+    getDatabase(app);
 
-            return;
-        }
 
+// ============================================================
+// PLAYER INFORMATION
+// ============================================================
 
-        // Days
-        const days =
-            Math.floor(
-                difference /
-                (1000 * 60 * 60 * 24)
-            );
+const INFO = {
 
+    prePuja: {
 
-        // Hours
-        const hours =
-            Math.floor(
-                (difference %
-                    (1000 * 60 * 60 * 24)) /
-                    (1000 * 60 * 60)
-            );
+        title: "Pre-Puja Vibes",
 
+        titleId:
+            "prePujaSongTitle",
 
-        // Minutes
-        const minutes =
-            Math.floor(
-                (difference %
-                    (1000 * 60 * 60)) /
-                    (1000 * 60)
-            );
+        artistId:
+            "prePujaSongArtist",
 
+        playId:
+            "prePujaPlayButton",
 
-        // Seconds
-        const seconds =
-            Math.floor(
-                (difference %
-                    (1000 * 60)) /
-                    1000
-            );
+        progressId:
+            "prePujaProgressBar",
 
+        containerId:
+            "prePujaProgressContainer",
 
-        daysElement.textContent =
-            String(days).padStart(2, "0");
+        currentId:
+            "prePujaCurrentTime",
 
+        durationId:
+            "prePujaDuration",
 
-        hoursElement.textContent =
-            String(hours).padStart(2, "0");
+        volumeId:
+            "prePujaVolumeSlider",
 
+        playlistId:
+            "prePujaPlaylist",
 
-        minutesElement.textContent =
-            String(minutes).padStart(2, "0");
+        playerId:
+            "prePujaYoutubePlayer"
 
+    },
 
-        secondsElement.textContent =
-            String(seconds).padStart(2, "0");
 
-    }
+    mahalaya: {
 
+        title: "Mahalaya Hits",
 
-    // Countdown start
-    updatePujaCountdown();
+        titleId:
+            "mahalayaSongTitle",
 
+        artistId:
+            "mahalayaSongArtist",
 
-    // প্রতি 1 second
-    setInterval(
-        updatePujaCountdown,
-        1000
-    );
+        playId:
+            "mahalayaPlayButton",
 
+        progressId:
+            "mahalayaProgressBar",
 
+        containerId:
+            "mahalayaProgressContainer",
 
-    /* =====================================================
-       2. HOME BUTTON
-    ===================================================== */
+        currentId:
+            "mahalayaCurrentTime",
 
-    window.goHome = function () {
+        durationId:
+            "mahalayaDuration",
 
-        const home =
-            document.getElementById("home");
+        volumeId:
+            "mahalayaVolumeSlider",
 
+        playlistId:
+            "mahalayaPlaylist",
 
-        if (home) {
+        playerId:
+            "mahalayaYoutubePlayer"
 
-            home.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+    },
 
-        }
 
-    };
+    bisorjoni: {
 
+        title: "Bisorjoni Songs",
 
+        titleId:
+            "bisorjoniSongTitle",
 
-    /* =====================================================
-       3. COMMON TIME FORMAT
-    ===================================================== */
+        artistId:
+            "bisorjoniSongArtist",
 
-    function formatTime(seconds) {
+        playId:
+            "bisorjoniPlayButton",
 
-        if (
-            !isFinite(seconds) ||
-            isNaN(seconds)
-        ) {
+        progressId:
+            "bisorjoniProgressBar",
 
-            return "0:00";
+        containerId:
+            "bisorjoniProgressContainer",
 
-        }
+        currentId:
+            "bisorjoniCurrentTime",
 
+        durationId:
+            "bisorjoniDuration",
 
-        const minutes =
-            Math.floor(seconds / 60);
+        volumeId:
+            "bisorjoniVolumeSlider",
 
+        playlistId:
+            "bisorjoniPlaylist",
 
-        const remainingSeconds =
-            Math.floor(seconds % 60);
-
-
-        return (
-            minutes +
-            ":" +
-            String(
-                remainingSeconds
-            ).padStart(2, "0")
-        );
-
-    }
-
-
-/* =====================================================
-   4. PRE-PUJA MUSIC - SINGLE YOUTUBE SONG
-===================================================== */
-
-const prePujaVideoId = "xlElO06nQy8";
-
-let prePujaPlayer = null;
-
-
-/* -----------------------------
-   HTML ELEMENTS
------------------------------ */
-
-const prePujaPlayButton =
-    document.getElementById("prePujaPlayButton");
-
-const prePujaTitle =
-    document.getElementById("prePujaSongTitle");
-
-const prePujaArtist =
-    document.getElementById("prePujaSongArtist");
-
-const prePujaProgress =
-    document.getElementById("prePujaProgressBar");
-
-const prePujaCurrentTime =
-    document.getElementById("prePujaCurrentTime");
-
-const prePujaDuration =
-    document.getElementById("prePujaDuration");
-
-const prePujaVolume =
-    document.getElementById("prePujaVolumeSlider");
-
-
-/* -----------------------------
-   CREATE PLAYER
------------------------------ */
-
-function createPrePujaPlayer() {
-
-    if (
-        typeof YT === "undefined" ||
-        !YT.Player
-    ) {
-        console.log("YouTube API এখনও load হয়নি।");
-        return;
-    }
-
-    const element =
-        document.getElementById("prePujaYoutubePlayer");
-
-    if (!element) {
-        console.log("prePujaYoutubePlayer পাওয়া যায়নি।");
-        return;
-    }
-
-    prePujaPlayer = new YT.Player(
-        "prePujaYoutubePlayer",
-        {
-
-            height: "1",
-            width: "1",
-
-            videoId: prePujaVideoId,
-
-            playerVars: {
-                autoplay: 0,
-                controls: 0,
-                rel: 0
-            },
-
-            events: {
-
-                onReady: onPrePujaReady,
-
-                onStateChange:
-                    onPrePujaStateChange
-
-            }
-
-        }
-    );
-}
-
-
-/* -----------------------------
-   PLAYER READY
------------------------------ */
-
-function onPrePujaReady(event) {
-
-    event.target.setVolume(100);
-
-    if (prePujaTitle) {
-        prePujaTitle.textContent =
-            "Pre-Puja Hits";
-    }
-
-    if (prePujaArtist) {
-        prePujaArtist.textContent =
-            "Pre-Puja Vibes";
-    }
-
-    if (prePujaPlayButton) {
-        prePujaPlayButton.textContent =
-            "▶";
-    }
-}
-
-
-/* -----------------------------
-   PLAY / PAUSE
------------------------------ */
-
-window.togglePrePujaPlay = function () {
-
-    if (!prePujaPlayer) {
-        console.log("Pre-Puja player এখনও ready নয়।");
-        return;
-    }
-
-    const state =
-        prePujaPlayer.getPlayerState();
-
-    if (state === YT.PlayerState.PLAYING) {
-
-        prePujaPlayer.pauseVideo();
-
-    } else {
-
-        prePujaPlayer.playVideo();
+        playerId:
+            "bisorjoniYoutubePlayer"
 
     }
 
 };
 
 
-/* -----------------------------
-   STATE CHANGE
------------------------------ */
+// ============================================================
+// STATE
+// ============================================================
 
-function onPrePujaStateChange(event) {
+const state = {
 
-    if (
-        event.data ===
-        YT.PlayerState.PLAYING
-    ) {
+    prePuja: {
 
-        if (prePujaPlayButton) {
-            prePujaPlayButton.textContent = "⏸";
-        }
+        songs: [],
 
-    }
+        index: 0
 
-    if (
-        event.data ===
-        YT.PlayerState.PAUSED
-    ) {
+    },
 
-        if (prePujaPlayButton) {
-            prePujaPlayButton.textContent = "▶";
-        }
 
-    }
+    mahalaya: {
 
-    if (
-        event.data ===
-        YT.PlayerState.ENDED
-    ) {
+        songs: [],
 
-        if (prePujaPlayButton) {
-            prePujaPlayButton.textContent = "▶";
-        }
+        index: 0
+
+    },
+
+
+    bisorjoni: {
+
+        songs: [],
+
+        index: 0
 
     }
 
+};
+
+
+// ============================================================
+// YOUTUBE PLAYERS
+// ============================================================
+
+const players = {
+
+    prePuja: null,
+
+    mahalaya: null,
+
+    bisorjoni: null
+
+};
+
+
+// ============================================================
+// AUTH STATE
+// ============================================================
+
+let currentUser = null;
+
+let isAdmin = false;
+
+let listenerRef = null;
+
+let activeListeningSection = null;
+
+
+// ============================================================
+// YOUTUBE ID
+// ============================================================
+
+function extractYouTubeId(url) {
+
+    if (!url) {
+        return null;
+    }
+
+    const value =
+        url.trim();
+
+
+    if (/^[\w-]{11}$/.test(value)) {
+
+        return value;
+    }
+
+
+    try {
+
+        const youtubeURL =
+            new URL(value);
+
+
+        const watchId =
+            youtubeURL.searchParams.get("v");
+
+
+        if (
+            watchId &&
+            /^[\w-]{11}$/.test(watchId)
+        ) {
+
+            return watchId;
+        }
+
+
+        if (
+            youtubeURL.hostname.includes("youtu.be")
+        ) {
+
+            const id =
+                youtubeURL.pathname
+                    .split("/")
+                    .filter(Boolean)[0];
+
+
+            if (
+                id &&
+                /^[\w-]{11}$/.test(id)
+            ) {
+
+                return id;
+            }
+        }
+
+
+        const parts =
+            youtubeURL.pathname
+                .split("/")
+                .filter(Boolean);
+
+
+        for (
+            const type of ["shorts", "embed"]
+        ) {
+
+            const index =
+                parts.indexOf(type);
+
+
+            if (
+                index !== -1 &&
+                parts[index + 1] &&
+                /^[\w-]{11}$/.test(
+                    parts[index + 1]
+                )
+            ) {
+
+                return parts[index + 1];
+            }
+        }
+
+    } catch {
+
+        return null;
+    }
+
+
+    return null;
 }
 
 
-/* -----------------------------
-   PROGRESS
------------------------------ */
+// ============================================================
+// LOAD FIREBASE PLAYLISTS
+// ============================================================
 
-setInterval(function () {
+function loadFirebasePlaylists() {
 
-    if (
-        !prePujaPlayer ||
-        typeof prePujaPlayer.getCurrentTime !==
-        "function"
-    ) {
-        return;
-    }
-
-    const current =
-        prePujaPlayer.getCurrentTime();
-
-    const total =
-        prePujaPlayer.getDuration();
-
-    if (!total) {
-        return;
-    }
-
-    const percent =
-        (current / total) * 100;
-
-    if (prePujaProgress) {
-
-        prePujaProgress.style.width =
-            percent + "%";
-
-    }
-
-    if (prePujaCurrentTime) {
-
-        prePujaCurrentTime.textContent =
-            formatTime(current);
-
-    }
-
-    if (prePujaDuration) {
-
-        prePujaDuration.textContent =
-            formatTime(total);
-
-    }
-
-}, 500);
+    const playlistRef =
+        ref(db, "playlists");
 
 
-/* -----------------------------
-   VOLUME
------------------------------ */
+    onValue(
+        playlistRef,
+        snapshot => {
 
-if (prePujaVolume) {
+            const data =
+                snapshot.val() || {};
 
-    prePujaVolume.addEventListener(
-        "input",
-        function () {
 
-            if (!prePujaPlayer) {
-                return;
-            }
+            Object.keys(state)
+                .forEach(section => {
 
-            prePujaPlayer.setVolume(
-                Number(this.value) * 100
-            );
+                    const sectionData =
+                        data[section] || {};
+
+
+                    state[section].songs =
+                        Object.entries(
+                            sectionData
+                        ).map(
+                            ([id, song]) => ({
+
+                                firebaseId: id,
+
+                                title:
+                                    song.title ||
+                                    "YouTube Song",
+
+                                artist:
+                                    song.artist ||
+                                    INFO[section].title,
+
+                                videoId:
+                                    song.videoId
+
+                            })
+                        );
+
+
+                    if (
+                        state[section].index >=
+                        state[section].songs.length
+                    ) {
+
+                        state[section].index =
+                            Math.max(
+                                0,
+                                state[section].songs.length - 1
+                            );
+                    }
+
+
+                    updateUI(section);
+
+                    renderPlaylist(section);
+
+                    renderAdminPlaylist(section);
+
+                });
 
         }
     );
-
 }
 
-/* =====================================================
-   5. MAHALAYA MUSIC - YOUTUBE
-===================================================== */
 
-const mahalayaSongs = [
+// ============================================================
+// UPDATE PLAYER UI
+// ============================================================
 
-    {
-        title: "মহালয়ার আগমনী1",
-        artist: "Birendra Krishna Bhadra",
-        youtubeId: "YQyo8QeoYhc"
+function updateUI(section) {
+
+    const info =
+        INFO[section];
+
+
+    const song =
+        state[section].songs[
+            state[section].index
+        ];
+
+
+    document.getElementById(
+        info.titleId
+    ).textContent =
+        song?.title ||
+        "No song added";
+
+
+    document.getElementById(
+        info.artistId
+    ).textContent =
+        song?.artist ||
+        info.title;
+
+
+    document.getElementById(
+        info.currentId
+    ).textContent =
+        "0:00";
+
+
+    document.getElementById(
+        info.durationId
+    ).textContent =
+        "0:00";
+
+
+    document.getElementById(
+        info.progressId
+    ).style.width =
+        "0%";
+}
+
+
+// ============================================================
+// RENDER PUBLIC PLAYLIST
+// ============================================================
+
+function renderPlaylist(section) {
+
+    const container =
+        document.getElementById(
+            INFO[section].playlistId
+        );
+
+
+    if (!container) {
+        return;
     }
 
-];
+
+    container.innerHTML = "";
 
 
-let mahalayaIndex = 0;
-let youtubePlayer = null;
+    state[section].songs.forEach(
+        (song, index) => {
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "playlist-item";
 
 
-/* -----------------------------
-   HTML ELEMENTS
------------------------------ */
+            if (
+                index ===
+                state[section].index
+            ) {
 
-const playButton =
-    document.getElementById("playButton");
-
-const songTitle =
-    document.getElementById("songTitle");
-
-const songArtist =
-    document.getElementById("songArtist");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const currentTime =
-    document.getElementById("currentTime");
-
-const duration =
-    document.getElementById("duration");
-
-const volumeSlider =
-    document.getElementById("volumeSlider");
+                row.classList.add("active");
+            }
 
 
-/* -----------------------------
-   CREATE YOUTUBE PLAYER
------------------------------ */
+            const songBox =
+                document.createElement("div");
 
-function createMahalayaPlayer() {
+            songBox.className =
+                "playlist-song";
+
+
+            const title =
+                document.createElement("strong");
+
+            title.textContent =
+                song.title;
+
+
+            const artist =
+                document.createElement("small");
+
+            artist.textContent =
+                song.artist;
+
+
+            songBox.append(
+                title,
+                artist
+            );
+
+
+            songBox.onclick =
+                () => {
+
+                    state[section].index =
+                        index;
+
+                    loadSong(
+                        section,
+                        false
+                    );
+
+                    renderPlaylist(
+                        section
+                    );
+                };
+
+
+            row.appendChild(songBox);
+
+            container.appendChild(row);
+
+        }
+    );
+}
+
+
+// ============================================================
+// LOAD SONG
+// ============================================================
+
+function loadSong(
+    section,
+    autoplay = false
+) {
+
+    const player =
+        players[section];
+
+
+    const song =
+        state[section].songs[
+            state[section].index
+        ];
+
+
+    updateUI(section);
+
+    renderPlaylist(section);
+
 
     if (
-        typeof YT === "undefined" ||
-        !YT.Player
+        !player ||
+        !song
     ) {
-        console.log(
-            "YouTube API এখনও load হয়নি।"
-        );
 
         return;
     }
 
 
-    const youtubeElement =
+    if (autoplay) {
+
+        player.loadVideoById(
+            song.videoId
+        );
+
+    } else {
+
+        player.cueVideoById(
+            song.videoId
+        );
+    }
+}
+
+
+// ============================================================
+// PLAY / PAUSE
+// ============================================================
+
+window.togglePlay =
+    function(section) {
+
+        const player =
+            players[section];
+
+
+        if (!player) {
+
+            alert(
+                "Player is still loading."
+            );
+
+            return;
+        }
+
+
+        if (
+            !state[section].songs.length
+        ) {
+
+            alert(
+                "No song has been added yet."
+            );
+
+            return;
+        }
+
+
+        const playerState =
+            player.getPlayerState();
+
+
+        if (
+            playerState ===
+            YT.PlayerState.PLAYING
+        ) {
+
+            player.pauseVideo();
+
+        } else {
+
+            stopOtherPlayers(section);
+
+            player.playVideo();
+        }
+    };
+
+
+// ============================================================
+// NEXT
+// ============================================================
+
+window.nextSong =
+    function(section) {
+
+        const songs =
+            state[section].songs;
+
+
+        if (!songs.length) {
+            return;
+        }
+
+
+        stopOtherPlayers(section);
+
+
+        state[section].index =
+            (
+                state[section].index + 1
+            ) % songs.length;
+
+
+        loadSong(
+            section,
+            true
+        );
+    };
+
+
+// ============================================================
+// PREVIOUS
+// ============================================================
+
+window.previousSong =
+    function(section) {
+
+        const songs =
+            state[section].songs;
+
+
+        if (!songs.length) {
+            return;
+        }
+
+
+        stopOtherPlayers(section);
+
+
+        state[section].index =
+            (
+                state[section].index -
+                1 +
+                songs.length
+            ) % songs.length;
+
+
+        loadSong(
+            section,
+            true
+        );
+    };
+
+
+// ============================================================
+// STOP OTHER PLAYERS
+// ============================================================
+
+function stopOtherPlayers(
+    currentSection
+) {
+
+    Object.keys(players)
+        .forEach(section => {
+
+            if (
+                section !== currentSection &&
+                players[section]
+            ) {
+
+                players[section]
+                    .pauseVideo();
+
+
+                setButton(
+                    section,
+                    false
+                );
+            }
+
+        });
+
+
+    if (
+        activeListeningSection &&
+        activeListeningSection !== currentSection
+    ) {
+
+        stopListeningPresence();
+    }
+}
+
+
+// ============================================================
+// BUTTON
+// ============================================================
+
+function setButton(
+    section,
+    playing
+) {
+
+    const button =
         document.getElementById(
-            "youtubePlayer"
+            INFO[section].playId
         );
 
 
-    if (!youtubeElement) {
+    if (button) {
 
-        console.log(
-            "youtubePlayer element পাওয়া যায়নি।"
-        );
+        button.textContent =
+            playing
+                ? "⏸"
+                : "▶";
+    }
+}
 
-        return;
 
+// ============================================================
+// TIME
+// ============================================================
+
+function formatTime(seconds) {
+
+    if (
+        !Number.isFinite(seconds)
+    ) {
+
+        return "0:00";
     }
 
 
-    youtubePlayer =
+    const minutes =
+        Math.floor(seconds / 60);
+
+
+    const secondsLeft =
+        Math.floor(seconds % 60);
+
+
+    return (
+        minutes +
+        ":" +
+        String(secondsLeft)
+            .padStart(2, "0")
+    );
+}
+
+
+// ============================================================
+// PROGRESS
+// ============================================================
+
+function updateProgress(section) {
+
+    const player =
+        players[section];
+
+
+    if (
+        !player ||
+        typeof player.getDuration !==
+        "function"
+    ) {
+
+        return;
+    }
+
+
+    const duration =
+        player.getDuration();
+
+
+    if (!duration) {
+        return;
+    }
+
+
+    const current =
+        player.getCurrentTime();
+
+
+    const percentage =
+        Math.min(
+            100,
+            (current / duration) * 100
+        );
+
+
+    document.getElementById(
+        INFO[section].progressId
+    ).style.width =
+        percentage + "%";
+
+
+    document.getElementById(
+        INFO[section].currentId
+    ).textContent =
+        formatTime(current);
+
+
+    document.getElementById(
+        INFO[section].durationId
+    ).textContent =
+        formatTime(duration);
+}
+
+
+// ============================================================
+// PROGRESS + VOLUME
+// ============================================================
+
+Object.keys(INFO).forEach(
+    section => {
+
+        const info =
+            INFO[section];
+
+
+        const progress =
+            document.getElementById(
+                info.containerId
+            );
+
+
+        if (progress) {
+
+            progress.onclick =
+                event => {
+
+                    const player =
+                        players[section];
+
+
+                    if (!player) {
+                        return;
+                    }
+
+
+                    const duration =
+                        player.getDuration();
+
+
+                    if (!duration) {
+                        return;
+                    }
+
+
+                    const rect =
+                        progress
+                            .getBoundingClientRect();
+
+
+                    const percentage =
+                        Math.max(
+                            0,
+                            Math.min(
+                                1,
+                                (
+                                    event.clientX -
+                                    rect.left
+                                ) /
+                                rect.width
+                            )
+                        );
+
+
+                    player.seekTo(
+                        percentage *
+                        duration,
+                        true
+                    );
+
+                };
+        }
+
+
+        const volume =
+            document.getElementById(
+                info.volumeId
+            );
+
+
+        if (volume) {
+
+            volume.oninput =
+                event => {
+
+                    if (
+                        players[section]
+                    ) {
+
+                        players[section]
+                            .setVolume(
+                                Number(
+                                    event.target.value
+                                )
+                            );
+                    }
+
+                };
+        }
+
+    }
+);
+
+
+// ============================================================
+// YOUTUBE PLAYER
+// ============================================================
+
+function createPlayer(section) {
+
+    const info =
+        INFO[section];
+
+
+    players[section] =
         new YT.Player(
-            "youtubePlayer",
+            info.playerId,
             {
 
-                height: "1",
+                width: "200",
 
-                width: "1",
-
-                videoId:
-                    mahalayaSongs[
-                        mahalayaIndex
-                    ].youtubeId,
+                height: "200",
 
                 playerVars: {
 
-                    autoplay: 0,
+                    playsinline: 1,
 
                     controls: 0,
 
-                    rel: 0
+                    rel: 0,
+
+                    modestbranding: 1
 
                 },
+
 
                 events: {
 
                     onReady:
-                        onYouTubeReady,
+                        event => {
+
+                            event.target
+                                .setVolume(100);
+
+
+                            const firstSong =
+                                state[section]
+                                    .songs[0];
+
+
+                            if (firstSong) {
+
+                                event.target
+                                    .cueVideoById(
+                                        firstSong.videoId
+                                    );
+                            }
+
+
+                            updateUI(
+                                section
+                            );
+
+                            renderPlaylist(
+                                section
+                            );
+                        },
+
 
                     onStateChange:
-                        onYouTubeStateChange
+                        event => {
+
+                            handlePlayerState(
+                                section,
+                                event.data
+                            );
+                        },
+
+
+                    onError:
+                        event => {
+
+                            console.warn(
+                                "YouTube error:",
+                                section,
+                                event.data
+                            );
+
+                            setButton(
+                                section,
+                                false
+                            );
+                        }
 
                 }
 
             }
         );
-
 }
 
 
-/* -----------------------------
-   YOUTUBE API CALLBACK
------------------------------ */
+// ============================================================
+// YOUTUBE API READY
+// ============================================================
 
 window.onYouTubeIframeAPIReady =
-    function () {
+    function() {
 
-        createMahalayaPlayer();
-        createprepujaplayer();
+        createPlayer("prePuja");
 
-    };
+        createPlayer("mahalaya");
 
-
-/* -----------------------------
-   PLAYER READY
------------------------------ */
-
-function onYouTubeReady(event) {
-
-    event.target.setVolume(100);
-
-    updateMahalayaInfo();
-
-}
-
-
-/* -----------------------------
-   UPDATE SONG INFO
------------------------------ */
-
-function updateMahalayaInfo() {
-
-    const song =
-        mahalayaSongs[
-            mahalayaIndex
-        ];
-
-
-    if (songTitle) {
-
-        songTitle.textContent =
-            song.title;
-
-    }
-
-
-    if (songArtist) {
-
-        songArtist.textContent =
-            song.artist;
-
-    }
-
-
-    if (progressBar) {
-
-        progressBar.style.width =
-            "0%";
-
-    }
-
-
-    if (currentTime) {
-
-        currentTime.textContent =
-            "0:00";
-
-    }
-
-
-    if (duration) {
-
-        duration.textContent =
-            "0:00";
-
-    }
-
-
-    if (playButton) {
-
-        playButton.textContent =
-            "▶";
-
-    }
-
-}
-
-
-/* -----------------------------
-   PLAY / PAUSE
------------------------------ */
-
-window.togglePlay =
-    function () {
-
-        if (!youtubePlayer) {
-
-            console.log(
-                "YouTube player এখনও ready নয়।"
-            );
-
-            return;
-
-        }
-
-
-        const state =
-            youtubePlayer.getPlayerState();
-
-
-        if (
-            state ===
-            YT.PlayerState.PLAYING
-        ) {
-
-            youtubePlayer.pauseVideo();
-
-        } else {
-
-            youtubePlayer.playVideo();
-
-        }
+        createPlayer("bisorjoni");
 
     };
 
 
-/* -----------------------------
-   PREVIOUS
------------------------------ */
+// ============================================================
+// PLAYER STATE
+// ============================================================
 
-window.previousSong =
-    function () {
-
-        mahalayaIndex--;
-
-
-        if (mahalayaIndex < 0) {
-
-            mahalayaIndex =
-                mahalayaSongs.length - 1;
-
-        }
-
-
-        if (youtubePlayer) {
-
-            youtubePlayer.loadVideoById(
-                mahalayaSongs[
-                    mahalayaIndex
-                ].youtubeId
-            );
-
-        }
-
-
-        updateMahalayaInfo();
-
-    };
-
-
-/* -----------------------------
-   NEXT
------------------------------ */
-
-window.nextSong =
-    function () {
-
-        mahalayaIndex++;
-
-
-        if (
-            mahalayaIndex >=
-            mahalayaSongs.length
-        ) {
-
-            mahalayaIndex = 0;
-
-        }
-
-
-        if (youtubePlayer) {
-
-            youtubePlayer.loadVideoById(
-                mahalayaSongs[
-                    mahalayaIndex
-                ].youtubeId
-            );
-
-        }
-
-
-        updateMahalayaInfo();
-
-    };
-
-
-/* -----------------------------
-   YOUTUBE STATE
------------------------------ */
-
-function onYouTubeStateChange(event) {
+function handlePlayerState(
+    section,
+    stateValue
+) {
 
     if (
-        event.data ===
+        stateValue ===
         YT.PlayerState.PLAYING
     ) {
 
-        if (playButton) {
+        stopOtherPlayers(section);
 
-            playButton.textContent =
-                "⏸";
+        setButton(
+            section,
+            true
+        );
 
-        }
-
+        startListeningPresence(
+            section
+        );
     }
 
 
-    if (
-        event.data ===
+    else if (
+        stateValue ===
         YT.PlayerState.PAUSED
     ) {
 
-        if (playButton) {
+        setButton(
+            section,
+            false
+        );
 
-            playButton.textContent =
-                "▶";
 
+        if (
+            activeListeningSection === section
+        ) {
+
+            stopListeningPresence();
+        }
+    }
+
+
+    else if (
+        stateValue ===
+        YT.PlayerState.ENDED
+    ) {
+
+        setButton(
+            section,
+            false
+        );
+
+
+        stopListeningPresence();
+
+
+        if (
+            state[section].songs.length
+        ) {
+
+            window.nextSong(section);
+        }
+    }
+}
+
+
+// ============================================================
+// AUTH - ANONYMOUS USER
+// ============================================================
+
+async function startAnonymousUser() {
+
+    try {
+
+        await signInAnonymously(auth);
+
+    } catch (error) {
+
+        console.error(
+            "Anonymous login failed:",
+            error
+        );
+
+    }
+}
+
+
+// ============================================================
+// AUTH STATE
+// ============================================================
+
+onAuthStateChanged(
+    auth,
+    user => {
+
+        currentUser = user;
+
+        isAdmin =
+            !!user &&
+            user.uid === ADMIN_UID;
+
+
+        updateAdminUI();
+
+    }
+);
+
+
+// ============================================================
+// ADMIN LOGIN
+// ============================================================
+
+document.getElementById(
+    "adminLoginButton"
+).onclick =
+    async function() {
+
+        const email =
+            document.getElementById(
+                "adminEmail"
+            ).value.trim();
+
+
+        const password =
+            document.getElementById(
+                "adminPassword"
+            ).value;
+
+
+        const message =
+            document.getElementById(
+                "adminMessage"
+            );
+
+
+        if (
+            !email ||
+            !password
+        ) {
+
+            message.textContent =
+                "Please enter email and password.";
+
+            return;
         }
 
+
+        try {
+
+            const result =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            if (
+                result.user.uid !==
+                ADMIN_UID
+            ) {
+
+                await signOut(auth);
+
+
+                message.textContent =
+                    "This account is not authorized as admin.";
+
+                await startAnonymousUser();
+
+                return;
+            }
+
+
+            message.textContent =
+                "Admin login successful.";
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Invalid email or password.";
+        }
+
+    };
+
+
+// ============================================================
+// ADMIN LOGOUT
+// ============================================================
+
+document.getElementById(
+    "adminLogoutButton"
+).onclick =
+    async function() {
+
+        await stopListeningPresence();
+
+        await signOut(auth);
+
+        await startAnonymousUser();
+
+    };
+
+
+// ============================================================
+// ADMIN UI
+// ============================================================
+
+function updateAdminUI() {
+
+    const login =
+        document.getElementById(
+            "adminLogin"
+        );
+
+
+    const panel =
+        document.getElementById(
+            "adminPanel"
+        );
+
+
+    if (isAdmin) {
+
+        login.classList.add(
+            "hidden"
+        );
+
+        panel.classList.remove(
+            "hidden"
+        );
+
+
+        renderAllAdminLists();
+
+    } else {
+
+        login.classList.remove(
+            "hidden"
+        );
+
+        panel.classList.add(
+            "hidden"
+        );
+    }
+}
+
+
+// ============================================================
+// ADMIN ADD SONG
+// ============================================================
+
+async function addAdminSong(
+    section,
+    nameInputId,
+    urlInputId
+) {
+
+    if (!isAdmin) {
+
+        alert(
+            "Only admin can add songs."
+        );
+
+        return;
+    }
+
+
+    const nameInput =
+        document.getElementById(
+            nameInputId
+        );
+
+
+    const urlInput =
+        document.getElementById(
+            urlInputId
+        );
+
+
+    const title =
+        nameInput.value.trim() ||
+        "YouTube Song";
+
+
+    const videoId =
+        extractYouTubeId(
+            urlInput.value
+        );
+
+
+    if (!videoId) {
+
+        alert(
+            "Please enter a valid YouTube URL."
+        );
+
+        return;
+    }
+
+
+    const duplicate =
+        state[section].songs.some(
+            song =>
+                song.videoId === videoId
+        );
+
+
+    if (duplicate) {
+
+        alert(
+            "This song is already in the playlist."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const playlistRef =
+            ref(
+                db,
+                "playlists/" +
+                section
+            );
+
+
+        const newSong =
+            push(playlistRef);
+
+
+        await set(
+            newSong,
+            {
+
+                title: title,
+
+                artist:
+                    INFO[section].title,
+
+                videoId: videoId,
+
+                addedAt:
+                    Date.now(),
+
+                addedBy:
+                    currentUser.uid
+
+            }
+        );
+
+
+        nameInput.value = "";
+
+        urlInput.value = "";
+
+
+        alert(
+            "Song added successfully."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not add song."
+        );
+    }
+}
+
+
+// ============================================================
+// ADMIN DELETE SONG
+// ============================================================
+
+async function deleteAdminSong(
+    section,
+    firebaseId
+) {
+
+    if (!isAdmin) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Delete this song?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        await remove(
+            ref(
+                db,
+                "playlists/" +
+                section +
+                "/" +
+                firebaseId
+            )
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not delete song."
+        );
+    }
+}
+
+
+// ============================================================
+// ADMIN PLAYLIST RENDER
+// ============================================================
+
+function renderAdminPlaylist(section) {
+
+    const containerId = {
+
+        prePuja:
+            "adminPrePujaList",
+
+        mahalaya:
+            "adminMahalayaList",
+
+        bisorjoni:
+            "adminBisorjoniList"
+
+    }[section];
+
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (!isAdmin) {
+        return;
+    }
+
+
+    state[section].songs.forEach(
+        song => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "admin-song";
+
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+
+            info.className =
+                "admin-song-info";
+
+
+            const title =
+                document.createElement(
+                    "strong"
+                );
+
+
+            title.textContent =
+                song.title;
+
+
+            const artist =
+                document.createElement(
+                    "small"
+                );
+
+
+            artist.textContent =
+                song.artist;
+
+
+            info.append(
+                title,
+                artist
+            );
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "delete-song";
+
+
+            deleteButton.textContent =
+                "✕";
+
+
+            deleteButton.onclick =
+                () => {
+
+                    deleteAdminSong(
+                        section,
+                        song.firebaseId
+                    );
+
+                };
+
+
+            row.append(
+                info,
+                deleteButton
+            );
+
+
+            container.appendChild(row);
+
+        }
+    );
+}
+
+
+// ============================================================
+// ADMIN BUTTONS
+// ============================================================
+
+document.getElementById(
+    "adminPrePujaAdd"
+).onclick =
+    () => {
+
+        addAdminSong(
+            "prePuja",
+            "adminPrePujaName",
+            "adminPrePujaUrl"
+        );
+
+    };
+
+
+document.getElementById(
+    "adminMahalayaAdd"
+).onclick =
+    () => {
+
+        addAdminSong(
+            "mahalaya",
+            "adminMahalayaName",
+            "adminMahalayaUrl"
+        );
+
+    };
+
+
+document.getElementById(
+    "adminBisorjoniAdd"
+).onclick =
+    () => {
+
+        addAdminSong(
+            "bisorjoni",
+            "adminBisorjoniName",
+            "adminBisorjoniUrl"
+        );
+
+    };
+
+
+// ============================================================
+// ADMIN LISTS
+// ============================================================
+
+function renderAllAdminLists() {
+
+    Object.keys(state)
+        .forEach(
+            section => {
+
+                renderAdminPlaylist(
+                    section
+                );
+
+            }
+        );
+}
+
+
+// ============================================================
+// LISTENER PRESENCE
+// ============================================================
+
+async function startListeningPresence(
+    section
+) {
+
+    if (
+        !currentUser ||
+        !db
+    ) {
+
+        return;
     }
 
 
     if (
-        event.data ===
-        YT.PlayerState.ENDED
+        activeListeningSection === section &&
+        listenerRef
     ) {
 
-        window.nextSong();
-
+        return;
     }
 
+
+    await stopListeningPresence();
+
+
+    try {
+
+        const listenersRef =
+            ref(
+                db,
+                "listeners"
+            );
+
+
+        listenerRef =
+            push(
+                listenersRef
+            );
+
+
+        await set(
+            listenerRef,
+            {
+
+                uid:
+                    currentUser.uid,
+
+                section:
+                    section,
+
+                startedAt:
+                    Date.now()
+
+            }
+        );
+
+
+        await onDisconnect(
+            listenerRef
+        ).remove();
+
+
+        activeListeningSection =
+            section;
+
+    } catch (error) {
+
+        console.warn(
+            "Presence error:",
+            error
+        );
+    }
 }
 
 
-/* -----------------------------
-   PROGRESS UPDATE
------------------------------ */
+// ============================================================
+// STOP PRESENCE
+// ============================================================
+
+async function stopListeningPresence() {
+
+    if (listenerRef) {
+
+        try {
+
+            await remove(
+                listenerRef
+            );
+
+        } catch {
+
+        }
+
+    }
+
+
+    listenerRef = null;
+
+    activeListeningSection = null;
+}
+
+
+// ============================================================
+// LISTENER COUNT
+// ============================================================
+
+onValue(
+    ref(db, "listeners"),
+    snapshot => {
+
+        const data =
+            snapshot.val() || {};
+
+
+        const count =
+            Object.keys(data).length;
+
+
+        document.getElementById(
+            "listenerCount"
+        ).textContent =
+            count;
+    }
+);
+
+
+// ============================================================
+// PROGRESS LOOP
+// ============================================================
 
 setInterval(
-    function () {
+    () => {
 
-        if (
-            !youtubePlayer ||
-            typeof youtubePlayer.getCurrentTime !==
-                "function"
-        ) {
+        Object.keys(players)
+            .forEach(
+                section => {
 
-            return;
+                    updateProgress(
+                        section
+                    );
 
-        }
-
-
-        const current =
-            youtubePlayer.getCurrentTime();
-
-
-        const total =
-            youtubePlayer.getDuration();
-
-
-        if (!total) {
-
-            return;
-
-        }
-
-
-        const percent =
-            (
-                current /
-                total
-            ) * 100;
-
-
-        if (progressBar) {
-
-            progressBar.style.width =
-                percent + "%";
-
-        }
-
-
-        if (currentTime) {
-
-            currentTime.textContent =
-                formatTime(current);
-
-        }
-
-
-        if (duration) {
-
-            duration.textContent =
-                formatTime(total);
-
-        }
+                }
+            );
 
     },
-
     500
 );
 
 
-/* -----------------------------
-   VOLUME
------------------------------ */
+// ============================================================
+// START
+// ============================================================
 
-if (volumeSlider) {
+startAnonymousUser();
 
-    volumeSlider.addEventListener(
-        "input",
-        function () {
-
-            if (!youtubePlayer) {
-
-                return;
-
-            }
+loadFirebasePlaylists();
 
 
-            youtubePlayer.setVolume(
-                Number(this.value) * 100
+// ============================================================
+// PAGE CLOSE
+// ============================================================
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (listenerRef) {
+
+            remove(
+                listenerRef
+            ).catch(
+                () => {}
             );
 
         }
-    );
-
-}
-    /* =====================================================
-       6. BISORJONI MUSIC
-    ===================================================== */
-
-    const bisorjoniSongs = [
-
-        {
-            title: "বিসর্জনের গান",
-            artist: "Bisorjoni Songs",
-            src: "music/bisorjoni1.mp3"
-        },
-
-        {
-            title: "আবার এসো মা",
-            artist: "Bisorjoni Songs",
-            src: "music/bisorjoni2.mp3"
-        },
-
-        {
-            title: "বিদায়ের সুর",
-            artist: "Bisorjoni Songs",
-            src: "music/bisorjoni3.mp3"
-        }
-
-    ];
-
-
-    let bisorjoniIndex = 0;
-
-
-    const bisorjoniAudio =
-        document.getElementById(
-            "bisorjoniMusicPlayer"
-        );
-
-
-    const bisorjoniPlayButton =
-        document.getElementById(
-            "bisorjoniPlayButton"
-        );
-
-
-    const bisorjoniTitle =
-        document.getElementById(
-            "bisorjoniSongTitle"
-        );
-
-
-    const bisorjoniArtist =
-        document.getElementById(
-            "bisorjoniSongArtist"
-        );
-
-
-    const bisorjoniProgress =
-        document.getElementById(
-            "bisorjoniProgressBar"
-        );
-
-
-    const bisorjoniCurrent =
-        document.getElementById(
-            "bisorjoniCurrentTime"
-        );
-
-
-    const bisorjoniDuration =
-        document.getElementById(
-            "bisorjoniDuration"
-        );
-
-
-    const bisorjoniVolume =
-        document.getElementById(
-            "bisorjoniVolumeSlider"
-        );
-
-
-    function loadBisorjoniSong() {
-
-        if (!bisorjoniAudio) {
-            return;
-        }
-
-
-        const song =
-            bisorjoniSongs[bisorjoniIndex];
-
-
-        bisorjoniAudio.src =
-            song.src;
-
-
-        if (bisorjoniTitle) {
-
-            bisorjoniTitle.textContent =
-                song.title;
-
-        }
-
-
-        if (bisorjoniArtist) {
-
-            bisorjoniArtist.textContent =
-                song.artist;
-
-        }
-
-
-        if (bisorjoniProgress) {
-
-            bisorjoniProgress.style.width =
-                "0%";
-
-        }
-
-
-        if (bisorjoniCurrent) {
-
-            bisorjoniCurrent.textContent =
-                "0:00";
-
-        }
-
-
-        if (bisorjoniDuration) {
-
-            bisorjoniDuration.textContent =
-                "0:00";
-
-        }
-
-
-        if (bisorjoniPlayButton) {
-
-            bisorjoniPlayButton.textContent =
-                "▶";
-
-        }
-
-
-        bisorjoniAudio.load();
 
     }
-
-
-    window.toggleBisorjoniPlay =
-        function () {
-
-            if (!bisorjoniAudio) {
-                return;
-            }
-
-
-            if (bisorjoniAudio.paused) {
-
-                bisorjoniAudio.play()
-                    .then(function () {
-
-                        if (bisorjoniPlayButton) {
-
-                            bisorjoniPlayButton.textContent =
-                                "⏸";
-
-                        }
-
-                    })
-                    .catch(function (error) {
-
-                        console.log(
-                            "Bisorjoni music error:",
-                            error
-                        );
-
-                        alert(
-                            "Bisorjoni music file পাওয়া যাচ্ছে না।"
-                        );
-
-                    });
-
-            } else {
-
-                bisorjoniAudio.pause();
-
-
-                if (bisorjoniPlayButton) {
-
-                    bisorjoniPlayButton.textContent =
-                        "▶";
-
-                }
-
-            }
-
-        };
-
-
-    window.previousBisorjoniSong =
-        function () {
-
-            bisorjoniIndex--;
-
-
-            if (bisorjoniIndex < 0) {
-
-                bisorjoniIndex =
-                    bisorjoniSongs.length - 1;
-
-            }
-
-
-            loadBisorjoniSong();
-
-        };
-
-
-    window.nextBisorjoniSong =
-        function () {
-
-            bisorjoniIndex++;
-
-
-            if (
-                bisorjoniIndex >=
-                bisorjoniSongs.length
-            ) {
-
-                bisorjoniIndex = 0;
-
-            }
-
-
-            loadBisorjoniSong();
-
-        };
-
-
-    if (bisorjoniAudio) {
-
-        bisorjoniAudio.addEventListener(
-            "loadedmetadata",
-            function () {
-
-                if (bisorjoniDuration) {
-
-                    bisorjoniDuration.textContent =
-                        formatTime(
-                            bisorjoniAudio.duration
-                        );
-
-                }
-
-            }
-        );
-
-
-        bisorjoniAudio.addEventListener(
-            "timeupdate",
-            function () {
-
-                if (
-                    !bisorjoniAudio.duration ||
-                    !bisorjoniProgress
-                ) {
-                    return;
-                }
-
-
-                const percent =
-                    (
-                        bisorjoniAudio.currentTime /
-                        bisorjoniAudio.duration
-                    ) * 100;
-
-
-                bisorjoniProgress.style.width =
-                    percent + "%";
-
-
-                if (bisorjoniCurrent) {
-
-                    bisorjoniCurrent.textContent =
-                        formatTime(
-                            bisorjoniAudio.currentTime
-                        );
-
-                }
-
-            }
-        );
-
-
-        bisorjoniAudio.addEventListener(
-            "ended",
-            function () {
-
-                window.nextBisorjoniSong();
-
-            }
-        );
-
-    }
-
-
-    if (
-        bisorjoniVolume &&
-        bisorjoniAudio
-    ) {
-
-        bisorjoniVolume.addEventListener(
-            "input",
-            function () {
-
-                bisorjoniAudio.volume =
-                    this.value;
-
-            }
-        );
-
-    }
-
-
-
-    /* =====================================================
-       7. LOAD FIRST SONG
-    ===================================================== */
-
-    loadPrePujaSong();
-
-    loadBisorjoniSong();
-
-
-});
+);
