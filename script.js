@@ -1848,14 +1848,15 @@ onValue(
             snapshot.val() || {};
 
 
-        const count =
-            Object.keys(data).length;
+        const liveListeners =
+    Object.keys(data).length;
 
+const BASE_LISTENERS = 102;
 
-        document.getElementById(
-            "listenerCount"
-        ).textContent =
-            count;
+document.getElementById(
+    "listenerCount"
+).textContent =
+    BASE_LISTENERS + liveListeners;
     }
 );
 
