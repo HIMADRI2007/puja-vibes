@@ -1242,8 +1242,7 @@ onAuthStateChanged(
     auth,
     async user => {
 
-        currentUser =
-            user;
+        currentUser = user;
 
         isAdmin =
             !!user &&
@@ -1251,13 +1250,28 @@ onAuthStateChanged(
 
         updateAdminUI();
 
-        if (
-            user &&
-            !presenceStarted
-        ) {
 
-            await startListeningPresence();
+        // If a song is already playing,
+        // start listener presence now
+        if (user) {
+
+            for (const section of Object.keys(players)) {
+
+                const player = players[section];
+
+                if (
+                    player &&
+                    typeof player.getPlayerState === "function" &&
+                    player.getPlayerState() === YT.PlayerState.PLAYING
+                ) {
+
+                    await startListeningPresence(section);
+
+                    break;
+                }
+            }
         }
+
     }
 );
 
