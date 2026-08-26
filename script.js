@@ -1920,7 +1920,9 @@ onValue(
             liveListeners;
 
         const counter =
-    document.getElementById("listenerCount");
+            getElement(
+                "listenerCount"
+            );
 
         if (counter) {
 
