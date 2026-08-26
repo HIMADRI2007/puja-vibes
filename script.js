@@ -1171,17 +1171,31 @@ function handlePlayerState(
 ) {
 
     if (
-        stateValue ===
-        YT.PlayerState.PLAYING
-    ) {
+    stateValue ===
+    YT.PlayerState.PLAYING
+) {
 
-        stopOtherPlayers(section);
+    stopOtherPlayers(section);
 
-        setButton(
-            section,
-            true
-        );
+    setButton(
+        section,
+        true
+    );
+
+    if (auth.currentUser) {
+
+        startListeningPresence(section);
+
+    } else {
+
+        startAnonymousUser().then(() => {
+
+            startListeningPresence(section);
+
+        });
+
     }
+}
 
     else if (
         stateValue ===
@@ -1222,7 +1236,16 @@ async function startAnonymousUser() {
 
     try {
 
-        await signInAnonymously(auth);
+        if (!auth.currentUser) {
+
+            await signInAnonymously(auth);
+
+        }
+
+        console.log(
+            "Anonymous user:",
+            auth.currentUser?.uid
+        );
 
     } catch (error) {
 
@@ -1230,6 +1253,7 @@ async function startAnonymousUser() {
             "Anonymous login failed:",
             error
         );
+
     }
 }
 
