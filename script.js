@@ -1,12 +1,10 @@
-console.log("PUJA VIBES JS LOADED");
-
 // ============================================================
-// PUJA VIBES - FINAL JAVASCRIPT
+// PUJA VIBES - FINAL SCRIPT
 // ============================================================
 
 
 // ============================================================
-// FIREBASE
+// FIREBASE IMPORTS
 // ============================================================
 
 import {
@@ -73,6 +71,13 @@ const ADMIN_UID =
 
 
 // ============================================================
+// BASE LISTENER COUNT
+// ============================================================
+
+const BASE_LISTENERS = 102;
+
+
+// ============================================================
 // FIREBASE INITIALIZE
 // ============================================================
 
@@ -87,7 +92,7 @@ const db =
 
 
 // ============================================================
-// PLAYER INFORMATION
+// PLAYER INFO
 // ============================================================
 
 const INFO = {
@@ -96,36 +101,25 @@ const INFO = {
 
         title: "Pre-Puja Vibes",
 
-        titleId:
-            "prePujaSongTitle",
+        titleId: "prePujaSongTitle",
 
-        artistId:
-            "prePujaSongArtist",
+        artistId: "prePujaSongArtist",
 
-        playId:
-            "prePujaPlayButton",
+        playId: "prePujaPlayButton",
 
-        progressId:
-            "prePujaProgressBar",
+        progressId: "prePujaProgressBar",
 
-        containerId:
-            "prePujaProgressContainer",
+        containerId: "prePujaProgressContainer",
 
-        currentId:
-            "prePujaCurrentTime",
+        currentId: "prePujaCurrentTime",
 
-        durationId:
-            "prePujaDuration",
+        durationId: "prePujaDuration",
 
-        volumeId:
-            "prePujaVolumeSlider",
+        volumeId: "prePujaVolumeSlider",
 
-        playlistId:
-            "prePujaPlaylist",
+        playlistId: "prePujaPlaylist",
 
-        playerId:
-            "prePujaYoutubePlayer"
-
+        playerId: "prePujaYoutubePlayer"
     },
 
 
@@ -133,36 +127,25 @@ const INFO = {
 
         title: "Mahalaya Hits",
 
-        titleId:
-            "mahalayaSongTitle",
+        titleId: "mahalayaSongTitle",
 
-        artistId:
-            "mahalayaSongArtist",
+        artistId: "mahalayaSongArtist",
 
-        playId:
-            "mahalayaPlayButton",
+        playId: "mahalayaPlayButton",
 
-        progressId:
-            "mahalayaProgressBar",
+        progressId: "mahalayaProgressBar",
 
-        containerId:
-            "mahalayaProgressContainer",
+        containerId: "mahalayaProgressContainer",
 
-        currentId:
-            "mahalayaCurrentTime",
+        currentId: "mahalayaCurrentTime",
 
-        durationId:
-            "mahalayaDuration",
+        durationId: "mahalayaDuration",
 
-        volumeId:
-            "mahalayaVolumeSlider",
+        volumeId: "mahalayaVolumeSlider",
 
-        playlistId:
-            "mahalayaPlaylist",
+        playlistId: "mahalayaPlaylist",
 
-        playerId:
-            "mahalayaYoutubePlayer"
-
+        playerId: "mahalayaYoutubePlayer"
     },
 
 
@@ -170,36 +153,25 @@ const INFO = {
 
         title: "Bisorjoni Songs",
 
-        titleId:
-            "bisorjoniSongTitle",
+        titleId: "bisorjoniSongTitle",
 
-        artistId:
-            "bisorjoniSongArtist",
+        artistId: "bisorjoniSongArtist",
 
-        playId:
-            "bisorjoniPlayButton",
+        playId: "bisorjoniPlayButton",
 
-        progressId:
-            "bisorjoniProgressBar",
+        progressId: "bisorjoniProgressBar",
 
-        containerId:
-            "bisorjoniProgressContainer",
+        containerId: "bisorjoniProgressContainer",
 
-        currentId:
-            "bisorjoniCurrentTime",
+        currentId: "bisorjoniCurrentTime",
 
-        durationId:
-            "bisorjoniDuration",
+        durationId: "bisorjoniDuration",
 
-        volumeId:
-            "bisorjoniVolumeSlider",
+        volumeId: "bisorjoniVolumeSlider",
 
-        playlistId:
-            "bisorjoniPlaylist",
+        playlistId: "bisorjoniPlaylist",
 
-        playerId:
-            "bisorjoniYoutubePlayer"
-
+        playerId: "bisorjoniYoutubePlayer"
     }
 
 };
@@ -212,29 +184,18 @@ const INFO = {
 const state = {
 
     prePuja: {
-
         songs: [],
-
         index: 0
-
     },
-
 
     mahalaya: {
-
         songs: [],
-
         index: 0
-
     },
 
-
     bisorjoni: {
-
         songs: [],
-
         index: 0
-
     }
 
 };
@@ -256,7 +217,7 @@ const players = {
 
 
 // ============================================================
-// AUTH STATE
+// GLOBAL STATE
 // ============================================================
 
 let currentUser = null;
@@ -265,11 +226,23 @@ let isAdmin = false;
 
 let listenerRef = null;
 
-let activeListeningSection = null;
+let youtubeReady = false;
+
+let presenceStarted = false;
 
 
 // ============================================================
-// YOUTUBE ID
+// DOM HELPER
+// ============================================================
+
+function getElement(id) {
+
+    return document.getElementById(id);
+}
+
+
+// ============================================================
+// YOUTUBE ID EXTRACTOR
 // ============================================================
 
 function extractYouTubeId(url) {
@@ -281,22 +254,17 @@ function extractYouTubeId(url) {
     const value =
         url.trim();
 
-
     if (/^[\w-]{11}$/.test(value)) {
-
         return value;
     }
-
 
     try {
 
         const youtubeURL =
             new URL(value);
 
-
         const watchId =
             youtubeURL.searchParams.get("v");
-
 
         if (
             watchId &&
@@ -305,7 +273,6 @@ function extractYouTubeId(url) {
 
             return watchId;
         }
-
 
         if (
             youtubeURL.hostname.includes("youtu.be")
@@ -316,7 +283,6 @@ function extractYouTubeId(url) {
                     .split("/")
                     .filter(Boolean)[0];
 
-
             if (
                 id &&
                 /^[\w-]{11}$/.test(id)
@@ -326,12 +292,10 @@ function extractYouTubeId(url) {
             }
         }
 
-
         const parts =
             youtubeURL.pathname
                 .split("/")
                 .filter(Boolean);
-
 
         for (
             const type of ["shorts", "embed"]
@@ -340,13 +304,10 @@ function extractYouTubeId(url) {
             const index =
                 parts.indexOf(type);
 
-
             if (
                 index !== -1 &&
                 parts[index + 1] &&
-                /^[\w-]{11}$/.test(
-                    parts[index + 1]
-                )
+                /^[\w-]{11}$/.test(parts[index + 1])
             ) {
 
                 return parts[index + 1];
@@ -358,20 +319,18 @@ function extractYouTubeId(url) {
         return null;
     }
 
-
     return null;
 }
 
 
 // ============================================================
-// LOAD FIREBASE PLAYLISTS
+// LOAD PLAYLISTS
 // ============================================================
 
 function loadFirebasePlaylists() {
 
     const playlistRef =
         ref(db, "playlists");
-
 
     onValue(
         playlistRef,
@@ -380,36 +339,31 @@ function loadFirebasePlaylists() {
             const data =
                 snapshot.val() || {};
 
-
-            Object.keys(state)
-                .forEach(section => {
+            Object.keys(state).forEach(
+                section => {
 
                     const sectionData =
                         data[section] || {};
 
-
                     state[section].songs =
-                        Object.entries(
-                            sectionData
-                        ).map(
-                            ([id, song]) => ({
+                        Object.entries(sectionData)
+                            .map(
+                                ([id, song]) => ({
 
-                                firebaseId: id,
+                                    firebaseId: id,
 
-                                title:
-                                    song.title ||
-                                    "YouTube Song",
+                                    title:
+                                        song.title ||
+                                        "YouTube Song",
 
-                                artist:
-                                    song.artist ||
-                                    INFO[section].title,
+                                    artist:
+                                        song.artist ||
+                                        INFO[section].title,
 
-                                videoId:
-                                    song.videoId
-
-                            })
-                        );
-
+                                    videoId:
+                                        song.videoId
+                                })
+                            );
 
                     if (
                         state[section].index >=
@@ -423,14 +377,33 @@ function loadFirebasePlaylists() {
                             );
                     }
 
-
                     updateUI(section);
 
                     renderPlaylist(section);
 
                     renderAdminPlaylist(section);
 
-                });
+                    if (
+                        youtubeReady &&
+                        players[section]
+                    ) {
+
+                        const song =
+                            state[section].songs[
+                                state[section].index
+                            ];
+
+                        if (song) {
+
+                            players[section]
+                                .cueVideoById(
+                                    song.videoId
+                                );
+                        }
+                    }
+
+                }
+            );
 
         }
     );
@@ -438,7 +411,7 @@ function loadFirebasePlaylists() {
 
 
 // ============================================================
-// UPDATE PLAYER UI
+// UPDATE UI
 // ============================================================
 
 function updateUI(section) {
@@ -446,65 +419,76 @@ function updateUI(section) {
     const info =
         INFO[section];
 
-
     const song =
         state[section].songs[
             state[section].index
         ];
 
+    const title =
+        getElement(info.titleId);
 
-    document.getElementById(
-        info.titleId
-    ).textContent =
-        song?.title ||
-        "No song added";
+    const artist =
+        getElement(info.artistId);
 
+    const current =
+        getElement(info.currentId);
 
-    document.getElementById(
-        info.artistId
-    ).textContent =
-        song?.artist ||
-        info.title;
+    const duration =
+        getElement(info.durationId);
 
+    const progress =
+        getElement(info.progressId);
 
-    document.getElementById(
-        info.currentId
-    ).textContent =
-        "0:00";
+    if (title) {
 
+        title.textContent =
+            song?.title ||
+            "No song added";
+    }
 
-    document.getElementById(
-        info.durationId
-    ).textContent =
-        "0:00";
+    if (artist) {
 
+        artist.textContent =
+            song?.artist ||
+            info.title;
+    }
 
-    document.getElementById(
-        info.progressId
-    ).style.width =
-        "0%";
+    if (current) {
+
+        current.textContent =
+            "0:00";
+    }
+
+    if (duration) {
+
+        duration.textContent =
+            "0:00";
+    }
+
+    if (progress) {
+
+        progress.style.width =
+            "0%";
+    }
 }
 
 
 // ============================================================
-// RENDER PUBLIC PLAYLIST
+// PUBLIC PLAYLIST
 // ============================================================
 
 function renderPlaylist(section) {
 
     const container =
-        document.getElementById(
+        getElement(
             INFO[section].playlistId
         );
-
 
     if (!container) {
         return;
     }
 
-
     container.innerHTML = "";
-
 
     state[section].songs.forEach(
         (song, index) => {
@@ -515,7 +499,6 @@ function renderPlaylist(section) {
             row.className =
                 "playlist-item";
 
-
             if (
                 index ===
                 state[section].index
@@ -524,13 +507,11 @@ function renderPlaylist(section) {
                 row.classList.add("active");
             }
 
-
             const songBox =
                 document.createElement("div");
 
             songBox.className =
                 "playlist-song";
-
 
             const title =
                 document.createElement("strong");
@@ -538,19 +519,16 @@ function renderPlaylist(section) {
             title.textContent =
                 song.title;
 
-
             const artist =
                 document.createElement("small");
 
             artist.textContent =
                 song.artist;
 
-
             songBox.append(
                 title,
                 artist
             );
-
 
             songBox.onclick =
                 () => {
@@ -568,11 +546,9 @@ function renderPlaylist(section) {
                     );
                 };
 
-
             row.appendChild(songBox);
 
             container.appendChild(row);
-
         }
     );
 }
@@ -590,44 +566,60 @@ function loadSong(
     const player =
         players[section];
 
-
     const song =
         state[section].songs[
             state[section].index
         ];
 
-
     updateUI(section);
 
     renderPlaylist(section);
 
+    if (!player) {
 
-    if (
-        !player ||
-        !song
-    ) {
+        alert(
+            "YouTube player is still loading. Please wait 2 seconds and try again."
+        );
 
         return;
     }
 
+    if (!song) {
 
-    if (autoplay) {
-
-        player.loadVideoById(
-            song.videoId
+        alert(
+            "No song has been added yet."
         );
 
-    } else {
+        return;
+    }
 
-        player.cueVideoById(
-            song.videoId
+    try {
+
+        if (autoplay) {
+
+            player.loadVideoById(
+                song.videoId
+            );
+
+        } else {
+
+            player.cueVideoById(
+                song.videoId
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Song loading error:",
+            error
         );
     }
 }
 
 
 // ============================================================
-// PLAY / PAUSE
+// TOGGLE PLAY
 // ============================================================
 
 window.togglePlay =
@@ -636,16 +628,14 @@ window.togglePlay =
         const player =
             players[section];
 
-
         if (!player) {
 
             alert(
-                "Player is still loading."
+                "YouTube player is still loading. Please wait a moment."
             );
 
             return;
         }
-
 
         if (
             !state[section].songs.length
@@ -658,23 +648,39 @@ window.togglePlay =
             return;
         }
 
+        try {
 
-        const playerState =
-            player.getPlayerState();
+            const playerState =
+                player.getPlayerState();
 
+            if (
+                playerState ===
+                YT.PlayerState.PLAYING
+            ) {
 
-        if (
-            playerState ===
-            YT.PlayerState.PLAYING
-        ) {
+                player.pauseVideo();
 
-            player.pauseVideo();
+            } else {
 
-        } else {
+                stopOtherPlayers(section);
 
-            stopOtherPlayers(section);
+                const song =
+                    state[section].songs[
+                        state[section].index
+                    ];
 
-            player.playVideo();
+                if (song) {
+
+                    player.playVideo();
+                }
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Play error:",
+                error
+            );
         }
     };
 
@@ -689,20 +695,16 @@ window.nextSong =
         const songs =
             state[section].songs;
 
-
         if (!songs.length) {
             return;
         }
 
-
         stopOtherPlayers(section);
-
 
         state[section].index =
             (
                 state[section].index + 1
             ) % songs.length;
-
 
         loadSong(
             section,
@@ -721,14 +723,11 @@ window.previousSong =
         const songs =
             state[section].songs;
 
-
         if (!songs.length) {
             return;
         }
 
-
         stopOtherPlayers(section);
-
 
         state[section].index =
             (
@@ -736,7 +735,6 @@ window.previousSong =
                 1 +
                 songs.length
             ) % songs.length;
-
 
         loadSong(
             section,
@@ -761,26 +759,23 @@ function stopOtherPlayers(
                 players[section]
             ) {
 
-                players[section]
-                    .pauseVideo();
+                try {
 
+                    players[section]
+                        .pauseVideo();
+
+                } catch {}
 
                 setButton(
                     section,
                     false
                 );
             }
-
         });
 
-
-    if (
-        activeListeningSection &&
-        activeListeningSection !== currentSection
-    ) {
-
-        stopListeningPresence();
-    }
+    // IMPORTANT:
+    // Do NOT remove listener presence here.
+    // Website visitor remains a listener while site is open.
 }
 
 
@@ -794,10 +789,9 @@ function setButton(
 ) {
 
     const button =
-        document.getElementById(
+        getElement(
             INFO[section].playId
         );
-
 
     if (button) {
 
@@ -810,26 +804,24 @@ function setButton(
 
 
 // ============================================================
-// TIME
+// FORMAT TIME
 // ============================================================
 
 function formatTime(seconds) {
 
     if (
-        !Number.isFinite(seconds)
+        !Number.isFinite(seconds) ||
+        seconds < 0
     ) {
 
         return "0:00";
     }
 
-
     const minutes =
         Math.floor(seconds / 60);
 
-
     const secondsLeft =
         Math.floor(seconds % 60);
-
 
     return (
         minutes +
@@ -841,7 +833,7 @@ function formatTime(seconds) {
 
 
 // ============================================================
-// PROGRESS
+// UPDATE PROGRESS
 // ============================================================
 
 function updateProgress(section) {
@@ -849,58 +841,71 @@ function updateProgress(section) {
     const player =
         players[section];
 
-
     if (
         !player ||
-        typeof player.getDuration !==
-        "function"
+        typeof player.getDuration !== "function"
     ) {
 
         return;
     }
 
+    try {
 
-    const duration =
-        player.getDuration();
+        const duration =
+            player.getDuration();
 
+        if (!duration) {
+            return;
+        }
 
-    if (!duration) {
-        return;
-    }
+        const current =
+            player.getCurrentTime();
 
+        const percentage =
+            Math.min(
+                100,
+                (current / duration) * 100
+            );
 
-    const current =
-        player.getCurrentTime();
+        const progress =
+            getElement(
+                INFO[section].progressId
+            );
 
+        const currentTime =
+            getElement(
+                INFO[section].currentId
+            );
 
-    const percentage =
-        Math.min(
-            100,
-            (current / duration) * 100
-        );
+        const durationTime =
+            getElement(
+                INFO[section].durationId
+            );
 
+        if (progress) {
 
-    document.getElementById(
-        INFO[section].progressId
-    ).style.width =
-        percentage + "%";
+            progress.style.width =
+                percentage + "%";
+        }
 
+        if (currentTime) {
 
-    document.getElementById(
-        INFO[section].currentId
-    ).textContent =
-        formatTime(current);
+            currentTime.textContent =
+                formatTime(current);
+        }
 
+        if (durationTime) {
 
-    document.getElementById(
-        INFO[section].durationId
-    ).textContent =
-        formatTime(duration);
+            durationTime.textContent =
+                formatTime(duration);
+        }
+
+    } catch {}
 }
 
 
 // ============================================================
-// PROGRESS + VOLUME
+// PROGRESS + VOLUME CONTROLS
 // ============================================================
 
 Object.keys(INFO).forEach(
@@ -909,12 +914,10 @@ Object.keys(INFO).forEach(
         const info =
             INFO[section];
 
-
         const progress =
-            document.getElementById(
+            getElement(
                 info.containerId
             );
-
 
         if (progress) {
 
@@ -924,55 +927,50 @@ Object.keys(INFO).forEach(
                     const player =
                         players[section];
 
-
                     if (!player) {
                         return;
                     }
 
+                    try {
 
-                    const duration =
-                        player.getDuration();
+                        const duration =
+                            player.getDuration();
 
+                        if (!duration) {
+                            return;
+                        }
 
-                    if (!duration) {
-                        return;
-                    }
+                        const rect =
+                            progress
+                                .getBoundingClientRect();
 
+                        const percentage =
+                            Math.max(
+                                0,
+                                Math.min(
+                                    1,
+                                    (
+                                        event.clientX -
+                                        rect.left
+                                    ) /
+                                    rect.width
+                                )
+                            );
 
-                    const rect =
-                        progress
-                            .getBoundingClientRect();
-
-
-                    const percentage =
-                        Math.max(
-                            0,
-                            Math.min(
-                                1,
-                                (
-                                    event.clientX -
-                                    rect.left
-                                ) /
-                                rect.width
-                            )
+                        player.seekTo(
+                            percentage *
+                            duration,
+                            true
                         );
 
-
-                    player.seekTo(
-                        percentage *
-                        duration,
-                        true
-                    );
-
+                    } catch {}
                 };
         }
 
-
         const volume =
-            document.getElementById(
+            getElement(
                 info.volumeId
             );
-
 
         if (volume) {
 
@@ -983,30 +981,56 @@ Object.keys(INFO).forEach(
                         players[section]
                     ) {
 
-                        players[section]
-                            .setVolume(
-                                Number(
-                                    event.target.value
-                                )
-                            );
-                    }
+                        try {
 
+                            players[section]
+                                .setVolume(
+                                    Number(
+                                        event.target.value
+                                    )
+                                );
+
+                        } catch {}
+                    }
                 };
         }
-
     }
 );
 
 
 // ============================================================
-// YOUTUBE PLAYER
+// CREATE YOUTUBE PLAYER
 // ============================================================
 
 function createPlayer(section) {
 
+    if (
+        !window.YT ||
+        !YT.Player
+    ) {
+
+        console.warn(
+            "YouTube API not ready:",
+            section
+        );
+
+        return;
+    }
+
     const info =
         INFO[section];
 
+    if (
+        !getElement(info.playerId)
+    ) {
+
+        console.error(
+            "YouTube container missing:",
+            info.playerId
+        );
+
+        return;
+    }
 
     players[section] =
         new YT.Player(
@@ -1017,6 +1041,8 @@ function createPlayer(section) {
 
                 height: "200",
 
+                videoId: "",
+
                 playerVars: {
 
                     playsinline: 1,
@@ -1026,9 +1052,7 @@ function createPlayer(section) {
                     rel: 0,
 
                     modestbranding: 1
-
                 },
-
 
                 events: {
 
@@ -1038,28 +1062,21 @@ function createPlayer(section) {
                             event.target
                                 .setVolume(100);
 
-
-                            const firstSong =
+                            const song =
                                 state[section]
                                     .songs[0];
 
-
-                            if (firstSong) {
+                            if (song) {
 
                                 event.target
                                     .cueVideoById(
-                                        firstSong.videoId
+                                        song.videoId
                                     );
                             }
 
+                            updateUI(section);
 
-                            updateUI(
-                                section
-                            );
-
-                            renderPlaylist(
-                                section
-                            );
+                            renderPlaylist(section);
                         },
 
 
@@ -1077,7 +1094,7 @@ function createPlayer(section) {
                         event => {
 
                             console.warn(
-                                "YouTube error:",
+                                "YouTube player error:",
                                 section,
                                 event.data
                             );
@@ -1087,9 +1104,7 @@ function createPlayer(section) {
                                 false
                             );
                         }
-
                 }
-
             }
         );
 }
@@ -1102,13 +1117,48 @@ function createPlayer(section) {
 window.onYouTubeIframeAPIReady =
     function() {
 
+        youtubeReady = true;
+
         createPlayer("prePuja");
 
         createPlayer("mahalaya");
 
         createPlayer("bisorjoni");
-
     };
+
+
+// ============================================================
+// FALLBACK YOUTUBE CHECK
+// ============================================================
+
+function waitForYouTube() {
+
+    if (
+        window.YT &&
+        YT.Player
+    ) {
+
+        if (!youtubeReady) {
+
+            youtubeReady = true;
+
+            createPlayer("prePuja");
+
+            createPlayer("mahalaya");
+
+            createPlayer("bisorjoni");
+        }
+
+        return;
+    }
+
+    setTimeout(
+        waitForYouTube,
+        500
+    );
+}
+
+waitForYouTube();
 
 
 // ============================================================
@@ -1131,12 +1181,7 @@ function handlePlayerState(
             section,
             true
         );
-
-        startListeningPresence(
-            section
-        );
     }
-
 
     else if (
         stateValue ===
@@ -1147,16 +1192,7 @@ function handlePlayerState(
             section,
             false
         );
-
-
-        if (
-            activeListeningSection === section
-        ) {
-
-            stopListeningPresence();
-        }
     }
-
 
     else if (
         stateValue ===
@@ -1167,10 +1203,6 @@ function handlePlayerState(
             section,
             false
         );
-
-
-        stopListeningPresence();
-
 
         if (
             state[section].songs.length
@@ -1183,7 +1215,7 @@ function handlePlayerState(
 
 
 // ============================================================
-// AUTH - ANONYMOUS USER
+// ANONYMOUS LOGIN
 // ============================================================
 
 async function startAnonymousUser() {
@@ -1198,7 +1230,6 @@ async function startAnonymousUser() {
             "Anonymous login failed:",
             error
         );
-
     }
 }
 
@@ -1209,17 +1240,24 @@ async function startAnonymousUser() {
 
 onAuthStateChanged(
     auth,
-    user => {
+    async user => {
 
-        currentUser = user;
+        currentUser =
+            user;
 
         isAdmin =
             !!user &&
             user.uid === ADMIN_UID;
 
-
         updateAdminUI();
 
+        if (
+            user &&
+            !presenceStarted
+        ) {
+
+            await startListeningPresence();
+        }
     }
 );
 
@@ -1228,98 +1266,111 @@ onAuthStateChanged(
 // ADMIN LOGIN
 // ============================================================
 
-document.getElementById(
-    "adminLoginButton"
-).onclick =
-    async function() {
+const adminLoginButton =
+    getElement("adminLoginButton");
 
-        const email =
-            document.getElementById(
-                "adminEmail"
-            ).value.trim();
+if (adminLoginButton) {
 
+    adminLoginButton.onclick =
+        async function() {
 
-        const password =
-            document.getElementById(
-                "adminPassword"
-            ).value;
+            const email =
+                getElement(
+                    "adminEmail"
+                ).value.trim();
 
+            const password =
+                getElement(
+                    "adminPassword"
+                ).value;
 
-        const message =
-            document.getElementById(
-                "adminMessage"
-            );
-
-
-        if (
-            !email ||
-            !password
-        ) {
-
-            message.textContent =
-                "Please enter email and password.";
-
-            return;
-        }
-
-
-        try {
-
-            const result =
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
+            const message =
+                getElement(
+                    "adminMessage"
                 );
 
-
             if (
-                result.user.uid !==
-                ADMIN_UID
+                !email ||
+                !password
             ) {
 
-                await signOut(auth);
-
-
                 message.textContent =
-                    "This account is not authorized as admin.";
-
-                await startAnonymousUser();
+                    "Please enter email and password.";
 
                 return;
             }
 
+            try {
 
-            message.textContent =
-                "Admin login successful.";
+                // Remove anonymous presence
+                // before changing account.
+                await stopListeningPresence();
 
-        } catch (error) {
+                const result =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
 
-            console.error(error);
+                if (
+                    result.user.uid !==
+                    ADMIN_UID
+                ) {
 
-            message.textContent =
-                "Invalid email or password.";
-        }
+                    await signOut(auth);
 
-    };
+                    message.textContent =
+                        "This account is not authorized as admin.";
+
+                    await startAnonymousUser();
+
+                    return;
+                }
+
+                message.textContent =
+                    "Admin login successful.";
+
+            } catch (error) {
+
+                console.error(
+                    "Admin login error:",
+                    error
+                );
+
+                message.textContent =
+                    "Invalid email or password.";
+
+                if (!currentUser) {
+
+                    await startAnonymousUser();
+                }
+            }
+        };
+}
 
 
 // ============================================================
 // ADMIN LOGOUT
 // ============================================================
 
-document.getElementById(
-    "adminLogoutButton"
-).onclick =
-    async function() {
+const adminLogoutButton =
+    getElement(
+        "adminLogoutButton"
+    );
 
-        await stopListeningPresence();
+if (adminLogoutButton) {
 
-        await signOut(auth);
+    adminLogoutButton.onclick =
+        async function() {
 
-        await startAnonymousUser();
+            await stopListeningPresence();
 
-    };
+            await signOut(auth);
+
+            await startAnonymousUser();
+        };
+}
 
 
 // ============================================================
@@ -1329,16 +1380,14 @@ document.getElementById(
 function updateAdminUI() {
 
     const login =
-        document.getElementById(
-            "adminLogin"
-        );
-
+        getElement("adminLogin");
 
     const panel =
-        document.getElementById(
-            "adminPanel"
-        );
+        getElement("adminPanel");
 
+    if (!login || !panel) {
+        return;
+    }
 
     if (isAdmin) {
 
@@ -1349,7 +1398,6 @@ function updateAdminUI() {
         panel.classList.remove(
             "hidden"
         );
-
 
         renderAllAdminLists();
 
@@ -1385,29 +1433,20 @@ async function addAdminSong(
         return;
     }
 
-
     const nameInput =
-        document.getElementById(
-            nameInputId
-        );
-
+        getElement(nameInputId);
 
     const urlInput =
-        document.getElementById(
-            urlInputId
-        );
-
+        getElement(urlInputId);
 
     const title =
         nameInput.value.trim() ||
         "YouTube Song";
 
-
     const videoId =
         extractYouTubeId(
             urlInput.value
         );
-
 
     if (!videoId) {
 
@@ -1418,13 +1457,11 @@ async function addAdminSong(
         return;
     }
 
-
     const duplicate =
         state[section].songs.some(
             song =>
                 song.videoId === videoId
         );
-
 
     if (duplicate) {
 
@@ -1435,7 +1472,6 @@ async function addAdminSong(
         return;
     }
 
-
     try {
 
         const playlistRef =
@@ -1445,36 +1481,33 @@ async function addAdminSong(
                 section
             );
 
-
         const newSong =
             push(playlistRef);
-
 
         await set(
             newSong,
             {
 
-                title: title,
+                title:
+                    title,
 
                 artist:
                     INFO[section].title,
 
-                videoId: videoId,
+                videoId:
+                    videoId,
 
                 addedAt:
                     Date.now(),
 
                 addedBy:
                     currentUser.uid
-
             }
         );
-
 
         nameInput.value = "";
 
         urlInput.value = "";
-
 
         alert(
             "Song added successfully."
@@ -1482,7 +1515,10 @@ async function addAdminSong(
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Add song error:",
+            error
+        );
 
         alert(
             "Could not add song."
@@ -1492,7 +1528,7 @@ async function addAdminSong(
 
 
 // ============================================================
-// ADMIN DELETE SONG
+// ADMIN DELETE
 // ============================================================
 
 async function deleteAdminSong(
@@ -1504,17 +1540,13 @@ async function deleteAdminSong(
         return;
     }
 
-
-    const confirmed =
-        confirm(
+    if (
+        !confirm(
             "Delete this song?"
-        );
-
-
-    if (!confirmed) {
+        )
+    ) {
         return;
     }
-
 
     try {
 
@@ -1530,7 +1562,10 @@ async function deleteAdminSong(
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Delete error:",
+            error
+        );
 
         alert(
             "Could not delete song."
@@ -1540,12 +1575,12 @@ async function deleteAdminSong(
 
 
 // ============================================================
-// ADMIN PLAYLIST RENDER
+// ADMIN PLAYLIST
 // ============================================================
 
 function renderAdminPlaylist(section) {
 
-    const containerId = {
+    const containerIds = {
 
         prePuja:
             "adminPrePujaList",
@@ -1555,28 +1590,22 @@ function renderAdminPlaylist(section) {
 
         bisorjoni:
             "adminBisorjoniList"
-
-    }[section];
-
+    };
 
     const container =
-        document.getElementById(
-            containerId
+        getElement(
+            containerIds[section]
         );
-
 
     if (!container) {
         return;
     }
 
-
     container.innerHTML = "";
-
 
     if (!isAdmin) {
         return;
     }
-
 
     state[section].songs.forEach(
         song => {
@@ -1586,60 +1615,48 @@ function renderAdminPlaylist(section) {
                     "div"
                 );
 
-
             row.className =
                 "admin-song";
-
 
             const info =
                 document.createElement(
                     "div"
                 );
 
-
             info.className =
                 "admin-song-info";
-
 
             const title =
                 document.createElement(
                     "strong"
                 );
 
-
             title.textContent =
                 song.title;
-
 
             const artist =
                 document.createElement(
                     "small"
                 );
 
-
             artist.textContent =
                 song.artist;
-
 
             info.append(
                 title,
                 artist
             );
 
-
             const deleteButton =
                 document.createElement(
                     "button"
                 );
 
-
             deleteButton.className =
                 "delete-song";
 
-
             deleteButton.textContent =
                 "✕";
-
 
             deleteButton.onclick =
                 () => {
@@ -1648,18 +1665,14 @@ function renderAdminPlaylist(section) {
                         section,
                         song.firebaseId
                     );
-
                 };
-
 
             row.append(
                 info,
                 deleteButton
             );
 
-
             container.appendChild(row);
-
         }
     );
 }
@@ -1669,46 +1682,55 @@ function renderAdminPlaylist(section) {
 // ADMIN BUTTONS
 // ============================================================
 
-document.getElementById(
-    "adminPrePujaAdd"
-).onclick =
-    () => {
+const preAdd =
+    getElement("adminPrePujaAdd");
 
-        addAdminSong(
-            "prePuja",
-            "adminPrePujaName",
-            "adminPrePujaUrl"
-        );
+if (preAdd) {
 
-    };
+    preAdd.onclick =
+        () => {
 
-
-document.getElementById(
-    "adminMahalayaAdd"
-).onclick =
-    () => {
-
-        addAdminSong(
-            "mahalaya",
-            "adminMahalayaName",
-            "adminMahalayaUrl"
-        );
-
-    };
+            addAdminSong(
+                "prePuja",
+                "adminPrePujaName",
+                "adminPrePujaUrl"
+            );
+        };
+}
 
 
-document.getElementById(
-    "adminBisorjoniAdd"
-).onclick =
-    () => {
+const mahalayaAdd =
+    getElement("adminMahalayaAdd");
 
-        addAdminSong(
-            "bisorjoni",
-            "adminBisorjoniName",
-            "adminBisorjoniUrl"
-        );
+if (mahalayaAdd) {
 
-    };
+    mahalayaAdd.onclick =
+        () => {
+
+            addAdminSong(
+                "mahalaya",
+                "adminMahalayaName",
+                "adminMahalayaUrl"
+            );
+        };
+}
+
+
+const bisorjoniAdd =
+    getElement("adminBisorjoniAdd");
+
+if (bisorjoniAdd) {
+
+    bisorjoniAdd.onclick =
+        () => {
+
+            addAdminSong(
+                "bisorjoni",
+                "adminBisorjoniName",
+                "adminBisorjoniUrl"
+            );
+        };
+}
 
 
 // ============================================================
@@ -1724,7 +1746,6 @@ function renderAllAdminLists() {
                 renderAdminPlaylist(
                     section
                 );
-
             }
         );
 }
@@ -1734,30 +1755,15 @@ function renderAllAdminLists() {
 // LISTENER PRESENCE
 // ============================================================
 
-async function startListeningPresence(
-    section
-) {
+async function startListeningPresence() {
 
     if (
         !currentUser ||
-        !db
+        presenceStarted
     ) {
 
         return;
     }
-
-
-    if (
-        activeListeningSection === section &&
-        listenerRef
-    ) {
-
-        return;
-    }
-
-
-    await stopListeningPresence();
-
 
     try {
 
@@ -1767,12 +1773,10 @@ async function startListeningPresence(
                 "listeners"
             );
 
-
         listenerRef =
             push(
                 listenersRef
             );
-
 
         await set(
             listenerRef,
@@ -1782,57 +1786,73 @@ async function startListeningPresence(
                     currentUser.uid,
 
                 section:
-                    section,
+                    "home",
 
                 startedAt:
                     Date.now()
-
             }
         );
-
 
         await onDisconnect(
             listenerRef
         ).remove();
 
+        presenceStarted =
+            true;
 
-        activeListeningSection =
-            section;
+        console.log(
+            "Listener presence started."
+        );
 
     } catch (error) {
 
-        console.warn(
-            "Presence error:",
+        console.error(
+            "Presence start error:",
             error
         );
+
+        listenerRef =
+            null;
+
+        presenceStarted =
+            false;
     }
 }
 
 
 // ============================================================
-// STOP PRESENCE
+// STOP LISTENER PRESENCE
 // ============================================================
 
 async function stopListeningPresence() {
 
-    if (listenerRef) {
+    if (!listenerRef) {
 
-        try {
+        presenceStarted =
+            false;
 
-            await remove(
-                listenerRef
-            );
-
-        } catch {
-
-        }
-
+        return;
     }
 
+    try {
 
-    listenerRef = null;
+        await remove(
+            listenerRef
+        );
 
-    activeListeningSection = null;
+    } catch (error) {
+
+        console.warn(
+            "Presence remove error:",
+            error
+        );
+    }
+
+    listenerRef =
+        null;
+
+    presenceStarted =
+        false;
 }
 
 
@@ -1847,16 +1867,23 @@ onValue(
         const data =
             snapshot.val() || {};
 
-
         const liveListeners =
-    Object.keys(data).length;
+            Object.keys(data).length;
 
-const BASE_LISTENERS = 102;
+        const total =
+            BASE_LISTENERS +
+            liveListeners;
 
-document.getElementById(
-    "listenerCount"
-).textContent =
-    BASE_LISTENERS + liveListeners;
+        const counter =
+            getElement(
+                "listenerCount"
+            );
+
+        if (counter) {
+
+            counter.textContent =
+                total;
+        }
     }
 );
 
@@ -1875,7 +1902,6 @@ setInterval(
                     updateProgress(
                         section
                     );
-
                 }
             );
 
@@ -1888,9 +1914,9 @@ setInterval(
 // START
 // ============================================================
 
-startAnonymousUser();
-
 loadFirebasePlaylists();
+
+startAnonymousUser();
 
 
 // ============================================================
@@ -1908,8 +1934,6 @@ window.addEventListener(
             ).catch(
                 () => {}
             );
-
         }
-
     }
 );
