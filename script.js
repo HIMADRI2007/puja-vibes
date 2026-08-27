@@ -879,6 +879,21 @@ function setButton(
                 ? "⏸"
                 : "▶";
     }
+
+
+    const wave =
+        getElement(
+            section + "Wave"
+        );
+
+
+    if (wave) {
+
+        wave.classList.toggle(
+            "playing",
+            playing
+        );
+    }
 }
 
 
