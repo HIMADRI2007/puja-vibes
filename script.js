@@ -66,9 +66,10 @@ const firebaseConfig = {
 // ADMIN UID
 // ============================================================
 
-const ADMIN_UID =
-    "YtBPHQ4BvobaWshSpJc6bPg19tv1";
-
+const ADMIN_UID =[
+    "YtBPHQ4BvobaWshSpJc6bPg19tv1",
+"uG5amxqFvvWOOVZxeJRDWQeqlKy2"
+];
 
 // ============================================================
 // BASE LISTENERS
