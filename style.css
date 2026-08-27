@@ -1619,3 +1619,37 @@ footer a {
     }
 }
 
+/* =====================================================
+   DESKTOP BACKGROUND DARKEN
+===================================================== */
+
+@media (min-width: 701px) {
+
+    .pre-puja-section {
+        background-image:
+            linear-gradient(
+                rgba(20,7,2,.68),
+                rgba(20,7,2,.82)
+            ),
+            url("pre-puja-bg.jpg");
+    }
+
+    .mahalaya-section {
+        background-image:
+            linear-gradient(
+                rgba(6,8,20,.70),
+                rgba(6,8,20,.85)
+            ),
+            url("mahalaya-bg.jpg");
+    }
+
+    .bisorjoni-section {
+        background-image:
+            linear-gradient(
+                rgba(15,5,4,.70),
+                rgba(15,5,4,.86)
+            ),
+            url("bisorjoni-bg.jpg");
+    }
+
+}
