@@ -264,9 +264,7 @@ section {
 
 
 .online-dot {
-
     width: 9px;
-
     height: 9px;
 
     background: #25d366;
@@ -274,7 +272,42 @@ section {
     border-radius: 50%;
 
     box-shadow:
-        0 0 10px #25d366;
+        0 0 6px #25d366,
+        0 0 12px rgba(37, 211, 102, .7);
+
+    animation:
+        onlinePulse 1.5s ease-in-out infinite;
+}
+
+
+@keyframes onlinePulse {
+
+    0% {
+        transform: scale(1);
+        opacity: 1;
+
+        box-shadow:
+            0 0 6px #25d366,
+            0 0 12px rgba(37, 211, 102, .7);
+    }
+
+    50% {
+        transform: scale(1.35);
+        opacity: .65;
+
+        box-shadow:
+            0 0 12px #25d366,
+            0 0 22px rgba(37, 211, 102, .9);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+
+        box-shadow:
+            0 0 6px #25d366,
+            0 0 12px rgba(37, 211, 102, .7);
+    }
 }
 
 
@@ -1252,4 +1285,314 @@ footer a {
         text-align: center;
     }
 
+}
+/* =====================================================
+   EXTRA MOBILE OPTIMIZATION
+===================================================== */
+
+@media (max-width: 480px) {
+
+    /* Prevent horizontal overflow */
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+
+    /* ================= HOME ================= */
+
+    .hero-content {
+        width: 94%;
+        padding-top: 105px;
+        padding-bottom: 45px;
+    }
+
+
+    .hero-content h1 {
+        font-size: 34px;
+        letter-spacing: 1px;
+    }
+
+
+    .hero-content h2 {
+        font-size: 42px;
+        margin-top: 14px;
+    }
+
+
+    .hero-content p {
+        font-size: 17px;
+        margin: 8px 0 22px;
+    }
+
+
+    /* Navigation */
+
+    .top-nav {
+        top: 12px;
+        gap: 7px 12px;
+        width: 94%;
+    }
+
+
+    .top-nav a {
+        font-size: 10px;
+    }
+
+
+    /* Listener */
+
+    .listener-box {
+        top: 52px;
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+
+    /* Cards */
+
+    .section-cards {
+        width: 100%;
+        gap: 10px;
+    }
+
+
+    .section-card {
+        width: 100%;
+        max-width: 285px;
+        min-height: 105px;
+        padding: 17px 14px;
+        border-radius: 18px;
+    }
+
+
+    .card-icon {
+        font-size: 27px;
+        margin-bottom: 5px;
+    }
+
+
+    .section-card h3 {
+        font-size: 18px;
+    }
+
+
+    .section-card span {
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+
+
+    /* ================= MUSIC SECTIONS ================= */
+
+    .music-section {
+        padding:
+            70px 10px 35px;
+    }
+
+
+    .section-inner {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    .section-inner > h1 {
+        font-size: 30px;
+        margin: 10px 0 3px;
+    }
+
+
+    .section-subtitle {
+        font-size: 16px;
+        margin-bottom: 18px;
+    }
+
+
+    /* Back button */
+
+    .back-home {
+        padding: 7px 13px;
+        font-size: 13px;
+    }
+
+
+    /* ================= MUSIC PLAYER ================= */
+
+    .music-player {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 12px;
+        margin-top: 20px;
+        border-radius: 18px;
+    }
+
+
+    .music-icon {
+        font-size: 36px;
+        margin-bottom: 4px;
+    }
+
+
+    .music-player h2 {
+        font-size: 20px;
+        margin: 4px 0;
+    }
+
+
+    .music-player > p {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+
+
+    /* Progress */
+
+    .progress-container {
+        height: 6px;
+    }
+
+
+    .time-container {
+        font-size: 11px;
+        margin-top: 6px;
+    }
+
+
+    /* Controls */
+
+    .player-controls {
+        gap: 12px;
+        margin: 16px 0;
+    }
+
+
+    .control-button {
+        width: 39px;
+        height: 39px;
+        font-size: 16px;
+    }
+
+
+    .play-button {
+        width: 52px;
+        height: 52px;
+        font-size: 20px;
+    }
+
+
+    /* Volume */
+
+    .volume-control {
+        gap: 7px;
+    }
+
+
+    .volume-control input {
+        width: 110px;
+    }
+
+
+    /* ================= PLAYLIST ================= */
+
+    .playlist-box {
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+
+    .playlist-box h3 {
+        font-size: 16px;
+        margin-bottom: 9px;
+    }
+
+
+    .playlist {
+        gap: 5px;
+    }
+
+
+    .playlist-item {
+        padding: 9px 10px;
+        border-radius: 9px;
+    }
+
+
+    .playlist-song strong {
+        font-size: 13px;
+    }
+
+
+    .playlist-song small {
+        font-size: 10px;
+    }
+
+
+    /* ================= ADMIN ================= */
+
+    .admin-section {
+        padding:
+            70px 10px 45px;
+    }
+
+
+    .admin-container {
+        width: 100%;
+        padding: 20px 12px;
+        border-radius: 18px;
+    }
+
+
+    .admin-icon {
+        font-size: 38px;
+    }
+
+
+    .admin-container > h1 {
+        font-size: 30px;
+    }
+
+
+    .admin-container > p {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+
+    .admin-group {
+        padding: 14px 10px;
+        border-radius: 14px;
+    }
+
+
+    .admin-group h3 {
+        font-size: 16px;
+    }
+
+
+    .admin-add-row {
+        gap: 7px;
+    }
+
+
+    .admin-add-row input {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+
+    .admin-add-row button {
+        min-height: 40px;
+        font-size: 13px;
+    }
+
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        padding: 15px 10px;
+        font-size: 11px;
+    }
 }
