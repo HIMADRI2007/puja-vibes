@@ -66,7 +66,7 @@ const firebaseConfig = {
 // ADMIN UID
 // ============================================================
 
-const ADMIN_UID =[
+const ADMIN_UIDS =[
     "YtBPHQ4BvobaWshSpJc6bPg19tv1",
 "uG5amxqFvvWOOVZxeJRDWQeqlKy2"
 ];
@@ -1405,7 +1405,7 @@ onAuthStateChanged(
 
         isAdmin =
             !!user &&
-            user.uid === ADMIN_UID;
+           ADMIN_UIDS.includes(user.uid);
 
 
         updateAdminUI();
@@ -1481,8 +1481,7 @@ if (adminLoginButton) {
 
 
                 if (
-                    result.user.uid !==
-                    ADMIN_UID
+                    !ADMIN_UIDS.includes(result.user.uid)
                 ) {
 
                     await signOut(auth);
