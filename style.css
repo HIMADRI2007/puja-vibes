@@ -1649,3 +1649,350 @@ footer a {
     }
 
 }
+/* =====================================================
+   NEW AESTHETIC MUSIC PLAYER
+===================================================== */
+
+.music-player {
+    width: min(650px, 100%);
+    margin: 28px auto 0;
+    padding: 30px 28px 25px;
+
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 30px;
+
+    background: rgba(20,12,8,.62);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.12);
+
+    text-align: center;
+}
+
+
+/* Flower icon */
+
+.music-icon {
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 36px;
+
+    background: rgba(255,180,90,.15);
+
+    border: 1px solid rgba(255,210,150,.25);
+
+    box-shadow:
+        0 0 25px rgba(255,170,80,.18);
+}
+
+
+/* Song name */
+
+.music-player h2 {
+    margin: 8px 0 5px;
+
+    font-size: 24px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Artist */
+
+.music-player > p {
+    margin: 0 0 24px;
+
+    font-size: 14px;
+
+    opacity: .65;
+}
+
+
+/* Progress */
+
+.progress-container {
+    width: 100%;
+    height: 6px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.13);
+
+    overflow: hidden;
+}
+
+.progress-container > div {
+    height: 100%;
+    width: 0;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffd27a,
+            #ff8b3d
+        );
+
+    box-shadow:
+        0 0 10px rgba(255,170,90,.5);
+}
+
+
+/* Time */
+
+.time-container {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 7px;
+
+    font-size: 11px;
+
+    opacity: .55;
+}
+
+
+/* Buttons */
+
+.player-controls {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 18px;
+
+    margin: 22px 0 18px;
+}
+
+
+.control-button,
+.play-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.20);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+
+.control-button {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    font-size: 17px;
+
+    background: rgba(255,255,255,.07);
+}
+
+
+.play-button {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,190,100,.35),
+            rgba(255,100,70,.20)
+        );
+
+    box-shadow:
+        0 0 25px rgba(255,170,80,.2);
+}
+
+
+.control-button:hover,
+.play-button:hover {
+    transform: scale(1.08);
+}
+
+
+/* Volume */
+
+.volume-control {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 14px;
+
+    opacity: .8;
+}
+
+
+.volume-control input {
+    width: 135px;
+
+    cursor: pointer;
+
+    accent-color: #ffb45f;
+}
+
+
+/* Playlist */
+
+.playlist-box {
+    margin-top: 26px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.10);
+
+    text-align: left;
+}
+
+
+.playlist-box h3 {
+    margin: 0 0 12px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    opacity: .8;
+}
+
+
+.playlist {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    max-height: 210px;
+
+    overflow-y: auto;
+}
+
+
+.playlist-item {
+    padding: 11px 13px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+
+.playlist-item:hover {
+    background:
+        rgba(255,255,255,.10);
+
+    transform: translateX(3px);
+}
+
+
+.playlist-item.active {
+    background:
+        rgba(255,175,85,.18);
+
+    box-shadow:
+        inset 3px 0 0 #ffb45f;
+}
+
+
+.playlist-song {
+    min-width: 0;
+}
+
+
+.playlist-song strong {
+    display: block;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.playlist-song small {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    opacity: .5;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+    .music-player {
+        padding: 22px 14px 20px;
+        border-radius: 22px;
+    }
+
+    .music-icon {
+        width: 64px;
+        height: 64px;
+        font-size: 30px;
+    }
+
+    .music-player h2 {
+        font-size: 19px;
+    }
+
+    .player-controls {
+        gap: 14px;
+    }
+
+    .control-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .play-button {
+        width: 54px;
+        height: 54px;
+    }
+
+    .volume-control input {
+        width: 105px;
+    }
+}
