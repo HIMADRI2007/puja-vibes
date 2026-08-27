@@ -32,8 +32,8 @@ section {
 
     background:
         linear-gradient(
-            rgba(0,0,0,.48),
-            rgba(0,0,0,.55)
+            rgba(0,0,0,.78),
+            rgba(0,0,0,.86)
         ),
         url("home-bg.jpg")
         center/cover no-repeat;
