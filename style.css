@@ -1619,17 +1619,13 @@ footer a {
     }
 }
 
-/* =====================================================
-   DESKTOP BACKGROUND DARKEN
-===================================================== */
-
 @media (min-width: 701px) {
 
     .pre-puja-section {
         background-image:
             linear-gradient(
-                rgba(20,7,2,.68),
-                rgba(20,7,2,.82)
+                rgba(0,0,0,0.20),
+                rgba(0,0,0,0.20)
             ),
             url("pre-puja-bg.jpg");
     }
@@ -1637,8 +1633,8 @@ footer a {
     .mahalaya-section {
         background-image:
             linear-gradient(
-                rgba(6,8,20,.70),
-                rgba(6,8,20,.85)
+                rgba(0,0,0,0.20),
+                rgba(0,0,0,0.20)
             ),
             url("mahalaya-bg.jpg");
     }
@@ -1646,8 +1642,8 @@ footer a {
     .bisorjoni-section {
         background-image:
             linear-gradient(
-                rgba(15,5,4,.70),
-                rgba(15,5,4,.86)
+                rgba(0,0,0,0.20),
+                rgba(0,0,0,0.20)
             ),
             url("bisorjoni-bg.jpg");
     }
